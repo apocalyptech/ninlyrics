@@ -1,0 +1,6 @@
+* Javascript highlighting of lyrics
+* Error reporting on invalid search variables (text, most notably)
+* Paging
+* Sorting
+* Prettification
+* DB Error reporting
