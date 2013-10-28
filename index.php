@@ -77,7 +77,7 @@ function html_select($name, $data, $id_var, $text_var, $multiple=false)
     print "</select>\n";
 }
 
-function add_to_querystring($name, $val)
+function modify_querystring($name, $val)
 {
     $qs = array();
     foreach ($_REQUEST as $reqkey => $reqval)
@@ -281,10 +281,24 @@ function do_search()
         <?
     }
 
-    $phrases = data_do_search($constraints);
+    $count = 0;
+    $phrases = data_do_search($constraints, $count);
+    if ($count == 1)
+    {
+        $plural = '';
+    }
+    else
+    {
+        $plural = 's';
+    }
     if (count($phrases) > 0)
     {
         print "<table class=\"phrases\">\n";
+        print "<tr>\n";
+        print "<td colspan=\"3\">\n";
+        printf("<div class=\"recordcount\">%d phrase%s found</div>\n", $count, $plural);
+        print "</td>\n";
+        print "</tr>\n";
         print "<tr>\n";
         print "<th>Phrase</th>\n";
         print "<th># Songs</th>\n";
@@ -300,7 +314,7 @@ function do_search()
                 print ' class="evenrow"';
             }
             print ">\n";
-            print '<td><a href="index.php?' . add_to_querystring('phrase', $data['phrase']) . "\">" . htmlentities($data['phrase']) . "</a></td>\n";
+            print '<td><a href="index.php?' . modify_querystring('phrase', $data['phrase']) . "\">" . htmlentities($data['phrase']) . "</a></td>\n";
             print '<td>' . $data['songcount'] . "</td>\n";
             print '<td>' . $data['albumcount'] . "</td>\n";
             print "</tr>\n";

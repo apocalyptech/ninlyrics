@@ -95,11 +95,13 @@ function data_get_albums()
  *            which the phrase will be contained.
  *
  * @param constraints An associative array definining the constraints to use
+ * @param count Pass-by-reference variable which will contain the total number of
+ *              rows available.
  * @return An array of associative arrays.  Each item will have the keys
  *         phrase, wordcount, songcount, and albumcount.
  *
  */
-function data_do_search($constraints=null)
+function data_do_search($constraints, &$count)
 {
     global $dbh;
     $ret_arr = array();
@@ -108,6 +110,7 @@ function data_do_search($constraints=null)
     $where = '';
     $complex = false;
     $tables = 'phrase p';
+    $count = 0;
 
     // Process our constraints
     $params = array();
@@ -188,11 +191,23 @@ function data_do_search($constraints=null)
     }
 
     // Run the SQL
-    $sql = 'select distinct phrase, wordcount, songcount, albumcount from ' . $tables . ' ' . $where . ' order by songcount desc, albumcount desc, phrase limit 100';
-    //print $sql . "<br>\n";
+    $fields = 'distinct phrase, wordcount, songcount, albumcount';
+    $orderby = ' order by songcount desc, albumcount desc, phrase limit 100';
+    $sql_count = 'select count(' . $fields . ') record_count from ' . $tables . ' ' . $where;
+    $sql_main = 'select ' . $fields . ' from ' . $tables . ' ' . $where . $orderby;
+    //print '<pre>' . $sql_count . "</pre>\n";
+    //print '<pre>' . $sql_main . "</pre>\n";
     try
     {
-        $sth = $dbh->prepare($sql);
+        // First grab the count
+        $sth = $dbh->prepare($sql_count);
+        $sth->execute($params);
+        $data = $sth->fetch(PDO::FETCH_ASSOC);
+        $count = $data['record_count'];
+        $sth = null;
+
+        // Now the actual query
+        $sth = $dbh->prepare($sql_main);
         $sth->execute($params);
         while ($data = $sth->fetch(PDO::FETCH_ASSOC))
         {

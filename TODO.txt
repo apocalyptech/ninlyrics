@@ -4,3 +4,5 @@
 * Sorting
 * Prettification
 * DB Error reporting
+* When searching by album, it might be nice to have the #Songs column
+  update to reflect the album(s) instead of the overall status

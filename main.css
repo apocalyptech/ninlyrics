@@ -35,3 +35,9 @@ BODY {
     font-weight: bold;
     color: blue;
 }
+
+.recordcount {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: .5em;
+}
