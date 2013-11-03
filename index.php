@@ -281,8 +281,23 @@ function do_search()
         <?
     }
 
+    // Figure out if we're paging
+    $pagesize = 100;
+    if (array_key_exists('startat', $_REQUEST))
+    {
+        $startat = (int)$_REQUEST['startat'];
+        if ($startat < 0)
+        {
+            $startat = 0;
+        }
+    }
+    else
+    {
+        $startat = 0;
+    }
+
     $count = 0;
-    $phrases = data_do_search($constraints, $count);
+    $phrases = data_do_search($constraints, $count, $startat);
     if ($count == 1)
     {
         $plural = '';
@@ -296,9 +311,44 @@ function do_search()
         print "<table class=\"phrases\">\n";
         print "<tr>\n";
         print "<td colspan=\"3\">\n";
-        printf("<div class=\"recordcount\">%d phrase%s found</div>\n", $count, $plural);
+        if ($startat + $pagesize > $count)
+        {
+            $endcount = $count;
+        }
+        else
+        {
+            $endcount = $startat + $pagesize;
+        }
+        printf("<div class=\"recordcount\">Showing %d-%d of %d phrase%s</div>\n", $startat+1, $endcount, $count, $plural);
         print "</td>\n";
         print "</tr>\n";
+        if ($count > $pagesize)
+        {
+            print "<tr>\n";
+            if ($startat > 0)
+            {
+                $newstart = $startat - $pagesize;
+                if ($newstart < 0)
+                {
+                    $newstart = 0;
+                }
+                print '<td class="prevrecords"><a href="index.php?' . modify_querystring('startat', $newstart) . "\">&lt;</a></td>\n";
+            }
+            else
+            {
+                print "<td>&nbsp;</td>\n";
+            }
+            print "<td>&nbsp;</td>\n";
+            if ($startat + $pagesize < $count)
+            {
+                print '<td class="nextrecords"><a href="index.php?' . modify_querystring('startat', $startat + $pagesize) . "\">&gt;</a></td>\n";
+            }
+            else
+            {
+                print "<td>&nbsp;</td>\n";
+            }
+            print "</tr>\n";
+        }
         print "<tr>\n";
         print "<th>Phrase</th>\n";
         print "<th># Songs</th>\n";

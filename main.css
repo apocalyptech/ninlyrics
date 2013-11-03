@@ -41,3 +41,11 @@ BODY {
     font-weight: bold;
     margin-bottom: .5em;
 }
+
+.prevrecords {
+    text-align: left;
+}
+
+.nextrecords {
+    text-align: right;
+}

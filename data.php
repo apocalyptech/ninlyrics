@@ -97,11 +97,12 @@ function data_get_albums()
  * @param constraints An associative array definining the constraints to use
  * @param count Pass-by-reference variable which will contain the total number of
  *              rows available.
+ * @param startat What record to start at for the results
  * @return An array of associative arrays.  Each item will have the keys
  *         phrase, wordcount, songcount, and albumcount.
  *
  */
-function data_do_search($constraints, &$count)
+function data_do_search($constraints, &$count, $startat=0)
 {
     global $dbh;
     $ret_arr = array();
@@ -192,7 +193,7 @@ function data_do_search($constraints, &$count)
 
     // Run the SQL
     $fields = 'distinct phrase, wordcount, songcount, albumcount';
-    $orderby = ' order by songcount desc, albumcount desc, phrase limit 100';
+    $orderby = ' order by songcount desc, albumcount desc, phrase limit ' . (int)$startat . ',100';
     $sql_count = 'select count(' . $fields . ') record_count from ' . $tables . ' ' . $where;
     $sql_main = 'select ' . $fields . ' from ' . $tables . ' ' . $where . $orderby;
     //print '<pre>' . $sql_count . "</pre>\n";
@@ -205,6 +206,8 @@ function data_do_search($constraints, &$count)
         $data = $sth->fetch(PDO::FETCH_ASSOC);
         $count = $data['record_count'];
         $sth = null;
+
+        // TODO: modify limit if $startat is too large, based on $count
 
         // Now the actual query
         $sth = $dbh->prepare($sql_main);
