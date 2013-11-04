@@ -322,9 +322,11 @@ function do_search()
         printf("<div class=\"recordcount\">Showing %d-%d of %d phrase%s</div>\n", $startat+1, $endcount, $count, $plural);
         print "</td>\n";
         print "</tr>\n";
+        $pager_row = '';
         if ($count > $pagesize)
         {
-            print "<tr>\n";
+            $pager_arr = array();
+            $pager_arr[] = "<tr>\n";
             if ($startat > 0)
             {
                 $newstart = $startat - $pagesize;
@@ -332,23 +334,34 @@ function do_search()
                 {
                     $newstart = 0;
                 }
-                print '<td class="prevrecords"><a href="index.php?' . modify_querystring('startat', $newstart) . "\">&lt;</a></td>\n";
+                $pager_arr[] = '<td class="prevrecords">';
+                $pager_arr[] = '<a href="index.php?' . modify_querystring('startat', 0) . '">|--</a>';
+                $pager_arr[] = '&nbsp;&nbsp;';
+                $pager_arr[] = '<a href="index.php?' . modify_querystring('startat', $newstart) . '">&lt;--</a>';
+                $pager_arr[] = "</td>\n";
             }
             else
             {
-                print "<td>&nbsp;</td>\n";
+                $pager_arr[] = "<td>&nbsp;</td>\n";
             }
-            print "<td>&nbsp;</td>\n";
+            $pager_arr[] =  "<td>&nbsp;</td>\n";
             if ($startat + $pagesize < $count)
             {
-                print '<td class="nextrecords"><a href="index.php?' . modify_querystring('startat', $startat + $pagesize) . "\">&gt;</a></td>\n";
+                $maxend = intval($count / $pagesize) * $pagesize;
+                $pager_arr[] = '<td class="nextrecords">';
+                $pager_arr[] = '<a href="index.php?' . modify_querystring('startat', $startat + $pagesize) . '">--&gt;</a>';
+                $pager_arr[] = '&nbsp;&nbsp;';
+                $pager_arr[] = '<a href="index.php?' . modify_querystring('startat', $maxend) . '">--|</a>';
+                $pager_arr[] = "</td>\n";
             }
             else
             {
-                print "<td>&nbsp;</td>\n";
+                $pager_arr[] =  "<td>&nbsp;</td>\n";
             }
-            print "</tr>\n";
+            $pager_arr[] = "</tr>\n";
+            $pager_row = implode('', $pager_arr);
         }
+        print $pager_row;
         print "<tr>\n";
         print "<th>Phrase</th>\n";
         print "<th># Songs</th>\n";
@@ -369,6 +382,7 @@ function do_search()
             print '<td>' . $data['albumcount'] . "</td>\n";
             print "</tr>\n";
         }
+        print $pager_row;
         print "</table>\n";
     }
     else
