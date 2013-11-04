@@ -297,7 +297,7 @@ function do_search()
     }
 
     $count = 0;
-    $phrases = data_do_search($constraints, $count, $startat);
+    $phrases = data_do_search($constraints, $count, $pagesize, $startat);
     if ($count == 1)
     {
         $plural = '';
