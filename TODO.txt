@@ -11,6 +11,19 @@
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
 * The sort arrows might make more sense the other way around?
+* We might be over-pruning our phrase list.  For example, a search
+  for "button" will yield three phrases, all from Capital G:
+    "he pushed a button and it dropped a bomb"
+    "i pushed a button and elected him to office and ah"
+    "you pushed a button and could watch it on the television"
+  ... but there's no phrase in the DB for just "pushed a button and"
+  itself, which despite being an "unimportant" subphrase of each of
+  those main phrases, is still shared between them, which might be
+  something important to catalog.  Because all three of these are from
+  the same song, it doesn't actually matter in this case, but if the
+  same thing is happening cross-song or cross-album somewhere, we could
+  be missing out on some data.  Anyway, investigate that and try to
+  figure out if it's even an actual problem or not.
      --
 * Okay, okay...  The interaction of the album select box and the rest
   of the aggregate stats needs to be clarified and expanded.  I think
