@@ -436,7 +436,7 @@ function do_search()
         {
             print "<tr>\n";
             print "<td class=\"sortheader header_phrase\">&nbsp;</td>\n";
-            print "<td colspan=\"2\" class=\"sortheader header_album\">(by album)</td>\n";
+            print "<td colspan=\"2\" class=\"sortheader header_album\">(in searched albums)</td>\n";
             print "<td colspan=\"2\" class=\"sortheader header_total\">(total)</td>\n";
             print "</tr>\n";
         }
