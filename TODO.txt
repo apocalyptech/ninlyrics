@@ -11,3 +11,15 @@
 * Notification of search constraints which don't work well together
   (like specifying two albums and then saying that the phrase must
   be in a minimum of three, etc)
+     --
+* Okay, okay...  The interaction of the album select box and the rest
+  of the aggregate stats needs to be clarified and expanded.  I think
+  most notably, the albumcount and songcount numbers need to have options
+  to specify whether they apply to ONLY the specific albums selected,
+  or if they can apply to all albums.  Case in point, if you select
+  (TDS, 2songs, 5words), you'll see "nothing can stop me now" in the
+  list.  That appears in TDS, Fragile, and WT.  If you change th album
+  dropdown to just Fragile, or just WT (while leaving 2songs+5words),
+  you won't see it in the list because the phrase only appears in ONE
+  song for each of those albums.  That makes *sense* but I think it'll
+  end up being counterintuitive.
