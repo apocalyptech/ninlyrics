@@ -23,7 +23,9 @@ create table song (
 
 -- The various "count" fields here are denormalized, but it
 -- simplifies our SQL quite a bit, and it's not like this data
--- gets updated outside the bulk import
+-- gets updated outside the bulk import.  There's even further
+-- "dynamic" denormalization used to avoid a bunch of GROUP BY
+-- stuff, one field per album.  Lame but about six times faster.
 create table phrase (
     pid int not null auto_increment,
     phrase varchar(100) not null,

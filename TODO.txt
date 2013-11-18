@@ -1,8 +1,7 @@
 * Javascript highlighting of lyrics
 * Error reporting on invalid search variables (text, most notably)
-* Paging
 * Sorting
 * Prettification
 * DB Error reporting
-* When searching by album, it might be nice to have the #Songs column
-  update to reflect the album(s) instead of the overall status
+* Add "total" #Songs and #Albums columns when searching by album
+* Drop out of "complex" SQL mode if literally every album is selected

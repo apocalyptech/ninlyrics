@@ -378,8 +378,8 @@ function do_search()
             }
             print ">\n";
             print '<td><a href="index.php?' . modify_querystring('phrase', $data['phrase']) . "\">" . htmlentities($data['phrase']) . "</a></td>\n";
-            print '<td>' . $data['songcount'] . "</td>\n";
-            print '<td>' . $data['albumcount'] . "</td>\n";
+            print '<td>' . $data['songcount_q'] . "</td>\n";
+            print '<td>' . $data['albumcount_q'] . "</td>\n";
             print "</tr>\n";
         }
         print $pager_row;

@@ -100,7 +100,8 @@ function data_get_albums()
  * @param pagesize How many records to return
  * @param startat What record to start at for the results
  * @return An array of associative arrays.  Each item will have the keys
- *         phrase, wordcount, songcount, and albumcount.
+ *         phrase, wordcount, songcount, songcount_q, albumcount, and
+ *         albumcount_q.
  *
  */
 function data_do_search($constraints, &$count, $pagesize, $startat=0)
@@ -116,12 +117,55 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
 
     // Process our constraints
     $params = array();
+    $albumcount_q_sql = '';
+    $songcount_q_sql = '';
     if (is_array($constraints))
     {
+        // Process "albums" first because our SQL gets more complex if we limit by
+        // album.
+        if (array_key_exists('albums', $constraints))
+        {
+            $val = $constraints['albums'];
+
+            $complex = true;
+            if (!is_array($val))
+            {
+                $val = array($val);
+            }
+
+            $albums_temp = array();
+            $albumcount_q_arr = array();
+            $songcount_q_arr = array();
+            foreach ($val as $album)
+            {
+                array_push($albums_temp, 'albumcount_' . (int)$album . '=1');
+                array_push($albumcount_q_arr, 'albumcount_' . (int)$album);
+                array_push($songcount_q_arr, 'songcount_' . (int)$album);
+            }
+            array_push($where_arr, '(' . implode(' or ', $albums_temp) . ')');
+
+            $songcount_q_sql = '(' . implode('+', $songcount_q_arr) . ')';
+            $albumcount_q_sql = '(' . implode('+', $albumcount_q_arr) . ')';
+        }
+     
+        // Now process everything else
         foreach ($constraints as $key => $val)
         {
             switch ($key)
             {
+
+                case 'albums':
+                    // Nothing, we already processed it outside this loop
+                    break;
+
+                case 'text':
+                    if (strlen($val) > 2)
+                    {
+                        array_push($where_arr, 'p.phrase like :text');
+                        $params['text'] = '%' . $val . '%';
+                    }
+                    break;
+
                 case 'min_words':
                     array_push($where_arr, 'p.wordcount >= :min_words');
                     $params[':min_words'] = (int)$val;
@@ -133,57 +177,54 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
                     break;
 
                 case 'min_songs':
-                    array_push($where_arr, 'p.songcount >= :min_songs');
+                    if ($complex)
+                    {
+                        array_push($where_arr, $songcount_q_sql . ' >= :min_songs');
+                    }
+                    else
+                    {
+                        array_push($where_arr, 'p.songcount >= :min_songs');
+                    }
                     $params[':min_songs'] = (int)$val;
                     break;
 
                 case 'max_songs':
-                    array_push($where_arr, 'p.songcount <= :max_songs');
+                    if ($complex)
+                    {
+                        array_push($where_arr, $songcount_q_sql . ' <= :max_songs');
+                    }
+                    else
+                    {
+                        array_push($where_arr, 'p.songcount <= :max_songs');
+                    }
                     $params[':max_songs'] = (int)$val;
                     break;
 
                 case 'min_albums':
-                    array_push($where_arr, 'p.albumcount >= :min_albums');
+                    if ($complex)
+                    {
+                        array_push($where_arr, $albumcount_q_sql . ' >= :min_albums');
+                    }
+                    else
+                    {
+                        array_push($where_arr, 'p.albumcount >= :min_albums');
+                    }
                     $params[':min_albums'] = (int)$val;
                     break;
 
                 case 'max_albums':
-                    array_push($where_arr, 'p.albumcount <= :max_albums');
+                    if ($complex)
+                    {
+                        array_push($where_arr, $albumcount_q_sql . ' <= :max_albums');
+                    }
+                    else
+                    {
+                        array_push($where_arr, 'p.albumcount <= :max_albums');
+                    }
                     $params[':max_albums'] = (int)$val;
-                    break;
-
-                case 'text':
-                    if (strlen($val) > 2)
-                    {
-                        array_push($where_arr, 'p.phrase like :text');
-                        $params['text'] = '%' . $val . '%';
-                    }
-                    break;
-
-                case 'albums':
-                    $complex = true;
-                    if (!is_array($val))
-                    {
-                        $val = array($val);
-                    }
-
-                    $albums = array();
-                    foreach ($val as $album)
-                    {
-                        array_push($albums, 'p2s.aid = :album_' . (int)$album);
-                        $params['album_' . (int)$album] = (int)$album;
-                    }
-                    array_push($where_arr, '(' . implode(' or ', $albums) . ')');
                     break;
             }
         }
-    }
-
-    // Some extra SQL we need for the "complex" query
-    if ($complex)
-    {
-        $tables .= ', p2s';
-        array_push($where_arr, 'p.pid = p2s.pid');
     }
 
     // Construct our WHERE query
@@ -194,9 +235,26 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
 
     // Run the SQL
     $fields = 'distinct phrase, wordcount, songcount, albumcount';
-    $orderby = ' order by songcount desc, albumcount desc, phrase limit ' . (int)$startat . ',' . (int)$pagesize;
+    $fields_no_count = '';
+    if ($complex)
+    {
+        if ($albumcount_q_sql != '')
+        {
+            $fields_no_count .= ', ' . $albumcount_q_sql . ' as albumcount_q';
+            $fields_no_count .= ', ' . $songcount_q_sql . ' as songcount_q';
+        }
+        else
+        {
+            $fields_no_count .= ', 0 as albumcount_q, 0 as q_songcount_q';
+        }
+    }
+    else
+    {
+        $fields_no_count .= ', albumcount as albumcount_q, songcount as songcount_q';
+    }
+    $orderby = ' order by songcount_q desc, albumcount_q desc, phrase limit ' . (int)$startat . ',' . (int)$pagesize;
     $sql_count = 'select count(' . $fields . ') record_count from ' . $tables . ' ' . $where;
-    $sql_main = 'select ' . $fields . ' from ' . $tables . ' ' . $where . $orderby;
+    $sql_main = 'select ' . $fields . $fields_no_count . ' from ' . $tables . ' ' . $where . $orderby;
     //print '<pre>' . $sql_count . "</pre>\n";
     //print '<pre>' . $sql_main . "</pre>\n";
     try

@@ -123,6 +123,7 @@ dbconn = MySQLdb.connect(host = dbhost, user = dbuser, passwd = dbpass, db = dbn
 dbcurs = dbconn.cursor(MySQLdb.cursors.DictCursor)
 phrases = {}
 phrases_album = {}
+phrases_song = {}
 
 # Truncate everything first
 dbcurs.execute('truncate p2s')
@@ -131,12 +132,58 @@ dbcurs.execute('truncate song')
 dbcurs.execute('truncate album')
 dbconn.commit()
 
+# Clean up our 'phrase' table
+#
+# This may be as good a place as any to mention why we're doing this.  It's
+# a bit silly, certainly.  Let's say that without denormalization, we want
+# to find the phrases contained in at least three songs, from a pool of
+# three specific albums.  Without denormalization, the query looks like this:
+#
+#    SELECT DISTINCT phrase
+#    FROM phrase p, p2s
+#    WHERE p.pid=p2s.pid AND
+#          (p2s.aid=1 OR p2s.aid=2 OR p2s.aid=3)
+#    GROUP BY phrase
+#    HAVING COUNT(DISTINCT sid) >= 3
+#
+# ... no problem, really.  The query runs just fine.  With denormalization, the
+# same query looks like this:
+#
+#    SELECT DISTINCT phrase
+#    FROM phrase p
+#    WHERE (songcount_1+songcount_2+songcount_3) >= 3
+#
+# So, simpler SQL, at the expense of abusing the relational structure.
+# The other benefit other than simplicity, though, is that in my tests, that
+# simpler SQL also happens to be a good six times faster than the one which
+# uses GROUP BY.  Not that there's ever going to be a huge number of people
+# banging on this data, but it's a pretty big performance gain, and the dataset
+# is both quite small by RDBMS standards, and extremely resistant to change.
+# (ie: barring my testing and tweaking, this data is going to change at most
+# once every year or two.)
+#
+# So yeah, we're denormalizing both the song-counts and the album-counts right
+# into the phrase table, using separate fields for each album.  It's uglier
+# and makes me twitch a little bit, but I don't think it's worth having
+# expensive SQL just to be elegant, in this case.
+dbcurs.execute('desc phrase')
+todelete = []
+for row in dbcurs:
+    if row['Field'][:10] == 'songcount_' or row['Field'][:11] == 'albumcount_':
+        todelete.append(row['Field'])
+if len(todelete) > 0:
+    print 'Deleting old denormalized aggregate fields'
+    for field in todelete:
+        dbcurs.execute('alter table phrase drop %s' % (field))
+    dbconn.commit()
+
 # Loop and import our albums and songs
 song_to_album = {}
 for album in albums:
     print 'Importing album: %s' % (album.title)
     dbcurs.execute('insert into album (atitle, year) values (%s, %s)', (album.title, album.year))
     album.dbid = dbconn.insert_id()
+    dbcurs.execute('alter table phrase add songcount_%d int not null default 0, add albumcount_%d int not null default 0' % (album.dbid, album.dbid))
     for song in album.songs:
         dbcurs.execute('insert into song (aid, stitle, lyrics) values (%s, %s, %s)', (album.dbid, song.title, "\n".join(song.lines_full)))
         song.dbid = dbconn.insert_id()
@@ -145,8 +192,12 @@ for album in albums:
             if phrase not in phrases:
                 phrases[phrase] = {}
                 phrases_album[phrase] = {}
+                phrases_song[phrase] = {}
             phrases[phrase][song.dbid] = True
             phrases_album[phrase][album.dbid] = True
+            if album.dbid not in phrases_song[phrase]:
+                phrases_song[phrase][album.dbid] = {}
+            phrases_song[phrase][album.dbid][song.dbid] = True
     dbconn.commit()
 
 # Now run through all of our phrases and attempt to weed out effectively-identical
@@ -203,11 +254,29 @@ print '%d phrases, %d in the blacklist (%d remain)' % (len(phrases), len(phrase_
 
 # Now import our phrases (and mappings) into the DB
 print 'Importing phrases...'
+sql_fieldname_list = ['phrase', 'wordcount', 'songcount', 'albumcount']
+sql_var_list = ['%s', '%s', '%s', '%s']
+for album in albums:
+    sql_fieldname_list.append('albumcount_%d' % (album.dbid))
+    sql_fieldname_list.append('songcount_%d' % (album.dbid))
+    sql_var_list.extend(['%s', '%s'])
+sql = 'insert into phrase(%s) values (%s)' % (
+        ', '.join(sql_fieldname_list),
+        ', '.join(sql_var_list),
+        )
 for phrase in phrases:
     if phrase not in phrase_blacklist:
-        dbcurs.execute('insert into phrase(phrase, wordcount, songcount, albumcount) values (%s, %s, %s, %s)',
-                (phrase, len(phrase.split()), len(phrases[phrase]), len(phrases_album[phrase]))
-            )
+        phrase_data_list = [phrase, len(phrase.split()), len(phrases[phrase]), len(phrases_album[phrase])]
+        for album in albums:
+            if album.dbid in phrases_album[phrase]:
+                phrase_data_list.append(1)
+            else:
+                phrase_data_list.append(0)
+            if (album.dbid in phrases_song[phrase]):
+                phrase_data_list.append(len(phrases_song[phrase][album.dbid]))
+            else:
+                phrase_data_list.append(0)
+        dbcurs.execute(sql, phrase_data_list)
         phrase_id = dbconn.insert_id()
         for song_id in phrases[phrase]:
             dbcurs.execute('insert into p2s (pid, sid, aid) values (%s, %s, %s)', (phrase_id, song_id, song_to_album[song_id]))
