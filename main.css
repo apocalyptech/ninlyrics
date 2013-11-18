@@ -14,6 +14,7 @@ BODY {
     float: right;
     padding: 2em;
     margin: 1em;
+    width: 23em;
 }
 
 .searchterms table tr th {
@@ -36,6 +37,14 @@ BODY {
     color: blue;
 }
 
+.phrasesdiv {
+    margin-right: 30em;
+}
+
+.phrases {
+    width: 100%;
+}
+
 .recordcount {
     text-align: center;
     font-weight: bold;
@@ -50,6 +59,14 @@ BODY {
     text-align: right;
 }
 
+.sortheader {
+    text-align: center;
+}
+
+.header_number {
+    width: 7em;
+}
+
 .header_phrase {
     background: #ffb;
 }
@@ -60,4 +77,9 @@ BODY {
 
 .header_total {
     background: #dfd;
+}
+
+.current_sort {
+    font-style: italic;
+    font-weight: bold;
 }

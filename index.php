@@ -79,14 +79,23 @@ function html_select($name, $data, $id_var, $text_var, $multiple=false)
 
 function html_header_sort($cursort, $sortname, $label, $class=null)
 {
+    // We're always at least in the 'sortheader' class
     if (is_null($class))
     {
-        print '<th>';
+        $class = 'sortheader';
     }
     else
     {
-        print '<th class="' . $class. '">';
+        $class .= ' sortheader';
     }
+
+    // Some visual indication of this header being the one that's being used to sort
+    if ($cursort == $sortname . '_up' or $cursort == $sortname . '_down')
+    {
+        $class .= ' current_sort';
+    }
+   
+    print '<td class="' . $class. '">';
     if ($cursort == $sortname . '_up')
     {
         print '&uarr;';
@@ -104,7 +113,7 @@ function html_header_sort($cursort, $sortname, $label, $class=null)
     {
         print '<a href="index.php?' . modify_querystring('sort', $sortname . '_down') .'">&darr;</a>';
     }
-    print "</th>\n";
+    print "</td>\n";
 }
 
 function modify_querystring($name, $val)
@@ -368,6 +377,7 @@ function do_search()
     }
     if (count($phrases) > 0)
     {
+        print "<div class=\"phrasesdiv\">\n";
         print "<table class=\"phrases\">\n";
         print "<tr>\n";
         print '<td colspan="' . $colcount . "\">\n";
@@ -425,20 +435,20 @@ function do_search()
         if ($doing_album_limit)
         {
             print "<tr>\n";
-            print "<th class=\"header_phrase\">&nbsp;</th>\n";
-            print "<th colspan=\"2\" class=\"header_album\">(by album)</th>\n";
-            print "<th colspan=\"2\" class=\"header_total\">(total)</th>\n";
+            print "<td class=\"sortheader header_phrase\">&nbsp;</td>\n";
+            print "<td colspan=\"2\" class=\"sortheader header_album\">(by album)</td>\n";
+            print "<td colspan=\"2\" class=\"sortheader header_total\">(total)</td>\n";
             print "</tr>\n";
         }
         print "<tr>\n";
         html_header_sort($sort, 'phrase', 'Phrase', 'header_phrase');
         if ($doing_album_limit)
         {
-            html_header_sort($sort, 'songcount_q', '# Songs', 'header_album');
-            html_header_sort($sort, 'albumcount_q', '# Albums', 'header_album');
+            html_header_sort($sort, 'songcount_q', '# Songs', 'header_album header_number');
+            html_header_sort($sort, 'albumcount_q', '# Albums', 'header_album header_number');
         }
-        html_header_sort($sort, 'songcount', '# Songs', 'header_total');
-        html_header_sort($sort, 'albumcount', '# Albums', 'header_total');
+        html_header_sort($sort, 'songcount', '# Songs', 'header_total header_number');
+        html_header_sort($sort, 'albumcount', '# Albums', 'header_total header_number');
         print "</tr>\n";
         $i = 0;
         foreach ($phrases as $data)
@@ -462,6 +472,7 @@ function do_search()
         }
         print $pager_row;
         print "</table>\n";
+        print "</div>\n";
     }
     else
     {
