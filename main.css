@@ -49,3 +49,15 @@ BODY {
 .nextrecords {
     text-align: right;
 }
+
+.header_phrase {
+    background: #ffb;
+}
+
+.header_album {
+    background: #ddf;
+}
+
+.header_total {
+    background: #dfd;
+}

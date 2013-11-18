@@ -252,9 +252,10 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
     {
         $fields_no_count .= ', albumcount as albumcount_q, songcount as songcount_q';
     }
-    $orderby = ' order by songcount_q desc, albumcount_q desc, phrase limit ' . (int)$startat . ',' . (int)$pagesize;
+    $sql_orderby = ' order by songcount_q desc, albumcount_q desc, phrase ';
+    $sql_limit = 'limit ' . (int)$startat . ',' . (int)$pagesize;
     $sql_count = 'select count(' . $fields . ') record_count from ' . $tables . ' ' . $where;
-    $sql_main = 'select ' . $fields . $fields_no_count . ' from ' . $tables . ' ' . $where . $orderby;
+    $sql_main = 'select ' . $fields . $fields_no_count . ' from ' . $tables . ' ' . $where . $sql_orderby . $sql_limit;
     //print '<pre>' . $sql_count . "</pre>\n";
     //print '<pre>' . $sql_main . "</pre>\n";
     try

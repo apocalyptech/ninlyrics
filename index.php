@@ -199,6 +199,7 @@ function do_search()
     }
 
     // Read constraints from our $_REQUEST
+    $doing_album_limit = false;
     $constraints = array();
     $constraints_eng = array();
     $valid_ints = array(
@@ -250,6 +251,7 @@ function do_search()
         }
         if (count($albumlist) > 0 and count($albumlist) < count($albums))
         {
+            $doing_album_limit = true;
             $constraints['albums'] = array_keys($albumlist);
             if (count($albumlist) > 1)
             {
@@ -306,11 +308,16 @@ function do_search()
     {
         $plural = 's';
     }
+    $colcount = 3;
+    if ($doing_album_limit)
+    {
+        $colcount += 2;
+    }
     if (count($phrases) > 0)
     {
         print "<table class=\"phrases\">\n";
         print "<tr>\n";
-        print "<td colspan=\"3\">\n";
+        print '<td colspan="' . $colcount . "\">\n";
         if ($startat + $pagesize > $count)
         {
             $endcount = $count;
@@ -344,7 +351,7 @@ function do_search()
             {
                 $pager_arr[] = "<td>&nbsp;</td>\n";
             }
-            $pager_arr[] =  "<td>&nbsp;</td>\n";
+            $pager_arr[] =  '<td colspan="' . ($colcount-2) . "\">&nbsp;</td>\n";
             if ($startat + $pagesize < $count)
             {
                 $maxend = intval($count / $pagesize) * $pagesize;
@@ -362,10 +369,28 @@ function do_search()
             $pager_row = implode('', $pager_arr);
         }
         print $pager_row;
+        if ($doing_album_limit)
+        {
+            print "<tr>\n";
+            print "<th class=\"header_phrase\">&nbsp;</th>\n";
+            print "<th colspan=\"2\" class=\"header_album\">(by album)</th>\n";
+            print "<th colspan=\"2\" class=\"header_total\">(total)</th>\n";
+            print "</tr>\n";
+        }
         print "<tr>\n";
-        print "<th>Phrase</th>\n";
-        print "<th># Songs</th>\n";
-        print "<th># Albums</th>\n";
+        print "<th class=\"header_phrase\">Phrase</th>\n";
+        if ($doing_album_limit)
+        {
+            print "<th class=\"header_album\"># Songs</th>\n";
+            print "<th class=\"header_album\"># Albums</th>\n";
+            print "<th class=\"header_total\"># Songs</th>\n";
+            print "<th class=\"header_total\"># Albums</th>\n";
+        }
+        else
+        {
+            print "<th class=\"header_total\"># Songs</th>\n";
+            print "<th class=\"header_total\"># Albums</th>\n";
+        }
         print "</tr>\n";
         $i = 0;
         foreach ($phrases as $data)
@@ -378,8 +403,13 @@ function do_search()
             }
             print ">\n";
             print '<td><a href="index.php?' . modify_querystring('phrase', $data['phrase']) . "\">" . htmlentities($data['phrase']) . "</a></td>\n";
-            print '<td>' . $data['songcount_q'] . "</td>\n";
-            print '<td>' . $data['albumcount_q'] . "</td>\n";
+            if ($doing_album_limit)
+            {
+                print '<td>' . $data['songcount_q'] . "</td>\n";
+                print '<td>' . $data['albumcount_q'] . "</td>\n";
+            }
+            print '<td>' . $data['songcount'] . "</td>\n";
+            print '<td>' . $data['albumcount'] . "</td>\n";
             print "</tr>\n";
         }
         print $pager_row;

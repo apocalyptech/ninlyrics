@@ -3,7 +3,6 @@
 * Sorting
 * Prettification
 * DB Error reporting
-* Add "total" #Songs and #Albums columns when searching by album
 * Drop out of "complex" SQL mode if literally every album is selected
 * Make sure that data_do_search() fails gracefully when passed in
   album IDs which don't exist.
