@@ -94,7 +94,16 @@ function data_get_albums()
  *  - albums: Key should be an array containing the numeric IDs of albums in
  *            which the phrase will be contained.
  *
+ * The "sort" parameter should be one of the following:
+ *
+ *  - phrase_up, phrase_down: sort by phrase
+ *  - songcount_up, songcount_down: sort by the "global" songcount stats
+ *  - albumcount_up, albumcount_down: sort by the "global" albumcount stats
+ *  - songcount_q_up, songcount_q_down: sort by the album-filtered songcount stats
+ *  - albumcount_q_up, albumcount_q_down: sort by the album-filtered albumcount stats
+ *
  * @param constraints An associative array definining the constraints to use
+ * @param sort Which key to sort by
  * @param count Pass-by-reference variable which will contain the total number of
  *              rows available.
  * @param pagesize How many records to return
@@ -104,7 +113,7 @@ function data_get_albums()
  *         albumcount_q.
  *
  */
-function data_do_search($constraints, &$count, $pagesize, $startat=0)
+function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
 {
     global $dbh;
     $ret_arr = array();
@@ -227,6 +236,51 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
         }
     }
 
+    // Figure out what we're sorting on
+    switch ($sort)
+    {
+        case 'phrase_up':
+            $sql_orderby = ' order by phrase, songcount_q, albumcount_q ';
+            break;
+
+        case 'phrase_down':
+            $sql_orderby = ' order by phrase desc, songcount_q desc, albumcount_q desc ';
+            break;
+
+        case 'albumcount_up':
+            $sql_orderby = ' order by albumcount, songcount, phrase ';
+            break;
+
+        case 'albumcount_down':
+            $sql_orderby = ' order by albumcount desc, songcount desc, phrase ';
+            break;
+
+        case 'albumcount_q_up':
+            $sql_orderby = ' order by albumcount_q, songcount_q, phrase ';
+            break;
+
+        case 'albumcount_q_down':
+            $sql_orderby = ' order by albumcount_q desc, songcount_q desc, phrase ';
+            break;
+
+        case 'songcount_up':
+            $sql_orderby = ' order by songcount, albumcount, phrase ';
+            break;
+
+        case 'songcount_down':
+            $sql_orderby = ' order by songcount desc, albumcount desc, phrase ';
+            break;
+
+        case 'songcount_q_up':
+            $sql_orderby = ' order by songcount_q, albumcount_q, phrase ';
+            break;
+
+        case 'songcount_q_down':
+        default:
+            $sql_orderby = ' order by songcount_q desc, albumcount_q desc, phrase ';
+            break;
+    }
+
     // Construct our WHERE query
     if (count($where_arr) > 0)
     {
@@ -252,7 +306,6 @@ function data_do_search($constraints, &$count, $pagesize, $startat=0)
     {
         $fields_no_count .= ', albumcount as albumcount_q, songcount as songcount_q';
     }
-    $sql_orderby = ' order by songcount_q desc, albumcount_q desc, phrase ';
     $sql_limit = 'limit ' . (int)$startat . ',' . (int)$pagesize;
     $sql_count = 'select count(' . $fields . ') record_count from ' . $tables . ' ' . $where;
     $sql_main = 'select ' . $fields . $fields_no_count . ' from ' . $tables . ' ' . $where . $sql_orderby . $sql_limit;

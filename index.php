@@ -77,6 +77,36 @@ function html_select($name, $data, $id_var, $text_var, $multiple=false)
     print "</select>\n";
 }
 
+function html_header_sort($cursort, $sortname, $label, $class=null)
+{
+    if (is_null($class))
+    {
+        print '<th>';
+    }
+    else
+    {
+        print '<th class="' . $class. '">';
+    }
+    if ($cursort == $sortname . '_up')
+    {
+        print '&uarr;';
+    }
+    else
+    {
+        print '<a href="index.php?' . modify_querystring('sort', $sortname . '_up') .'">&uarr;</a>';
+    }
+    print '&nbsp;' . htmlentities($label) . '&nbsp;';
+    if ($cursort == $sortname . '_down')
+    {
+        print '&darr;';
+    }
+    else
+    {
+        print '<a href="index.php?' . modify_querystring('sort', $sortname . '_down') .'">&darr;</a>';
+    }
+    print "</th>\n";
+}
+
 function modify_querystring($name, $val)
 {
     $qs = array();
@@ -100,7 +130,7 @@ function modify_querystring($name, $val)
             array_push($qs_vars, urlencode($key) . '=' . urlencode($val));
         }
     }
-    return implode('&', $qs_vars);
+    return implode('&amp;', $qs_vars);
 }
 
 function do_phrase()
@@ -265,6 +295,29 @@ function do_search()
         }
     }
 
+    // Read sort value from our $_REQUEST
+    $sort = 'songcount_down';
+    $valid_sorts = array(
+        'phrase_up', 'phrase_down',
+        'songcount_up', 'songcount_down',
+        'albumcount_up', 'albumcount_down',
+    );
+    if ($doing_album_limit)
+    {
+        $sort = 'songcount_q_down';
+        array_push($valid_sorts, 'songcount_q_up');
+        array_push($valid_sorts, 'songcount_q_down');
+        array_push($valid_sorts, 'albumcount_q_up');
+        array_push($valid_sorts, 'albumcount_q_down');
+    }
+    if (array_key_exists('sort', $_REQUEST))
+    {
+        if (in_array($_REQUEST['sort'], $valid_sorts))
+        {
+            $sort = $_REQUEST['sort'];
+        }
+    }
+
     // Display our search terms
     if (count($constraints_eng) > 0)
     {
@@ -299,7 +352,7 @@ function do_search()
     }
 
     $count = 0;
-    $phrases = data_do_search($constraints, $count, $pagesize, $startat);
+    $phrases = data_do_search($constraints, $sort, $count, $pagesize, $startat);
     if ($count == 1)
     {
         $plural = '';
@@ -378,19 +431,14 @@ function do_search()
             print "</tr>\n";
         }
         print "<tr>\n";
-        print "<th class=\"header_phrase\">Phrase</th>\n";
+        html_header_sort($sort, 'phrase', 'Phrase', 'header_phrase');
         if ($doing_album_limit)
         {
-            print "<th class=\"header_album\"># Songs</th>\n";
-            print "<th class=\"header_album\"># Albums</th>\n";
-            print "<th class=\"header_total\"># Songs</th>\n";
-            print "<th class=\"header_total\"># Albums</th>\n";
+            html_header_sort($sort, 'songcount_q', '# Songs', 'header_album');
+            html_header_sort($sort, 'albumcount_q', '# Albums', 'header_album');
         }
-        else
-        {
-            print "<th class=\"header_total\"># Songs</th>\n";
-            print "<th class=\"header_total\"># Albums</th>\n";
-        }
+        html_header_sort($sort, 'songcount', '# Songs', 'header_total');
+        html_header_sort($sort, 'albumcount', '# Albums', 'header_total');
         print "</tr>\n";
         $i = 0;
         foreach ($phrases as $data)

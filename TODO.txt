@@ -1,6 +1,5 @@
 * Javascript highlighting of lyrics
 * Error reporting on invalid search variables (text, most notably)
-* Sorting
 * Prettification
 * DB Error reporting
 * Drop out of "complex" SQL mode if literally every album is selected
@@ -10,6 +9,8 @@
 * Notification of search constraints which don't work well together
   (like specifying two albums and then saying that the phrase must
   be in a minimum of three, etc)
+* Probably should reset paging when sorts change?
+* The sort arrows might make more sense the other way around?
      --
 * Okay, okay...  The interaction of the album select box and the rest
   of the aggregate stats needs to be clarified and expanded.  I think
