@@ -256,11 +256,11 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
             break;
 
         case 'albumcount_q_up':
-            $sql_orderby = ' order by albumcount_q, songcount_q, phrase ';
+            $sql_orderby = ' order by albumcount_q, songcount_q, albumcount, songcount, phrase ';
             break;
 
         case 'albumcount_q_down':
-            $sql_orderby = ' order by albumcount_q desc, songcount_q desc, phrase ';
+            $sql_orderby = ' order by albumcount_q desc, songcount_q desc, albumcount desc, songcount desc, phrase ';
             break;
 
         case 'songcount_up':
@@ -272,12 +272,12 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
             break;
 
         case 'songcount_q_up':
-            $sql_orderby = ' order by songcount_q, albumcount_q, phrase ';
+            $sql_orderby = ' order by songcount_q, albumcount_q, songcount, albumcount, phrase ';
             break;
 
         case 'songcount_q_down':
         default:
-            $sql_orderby = ' order by songcount_q desc, albumcount_q desc, phrase ';
+            $sql_orderby = ' order by songcount_q desc, albumcount_q desc, songcount desc, albumcount desc, phrase ';
             break;
     }
 
