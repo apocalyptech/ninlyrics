@@ -8,3 +8,6 @@
 * Make sure that data_do_search() fails gracefully when passed in
   album IDs which don't exist.
 * Clean up the actual lyric data, of course.
+* Notification of search constraints which don't work well together
+  (like specifying two albums and then saying that the phrase must
+  be in a minimum of three, etc)
