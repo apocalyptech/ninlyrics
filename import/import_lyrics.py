@@ -82,8 +82,8 @@ dbpass = None
 if 'XDG_CONFIG_HOME' in os.environ:
     config_home = os.environ['XDG_CONFIG_HOME']
 else:
-    config_home = os.path.expanduser('~')
-dbfile = os.path.join(config_home, '.config', 'ninlyrics', 'dbinfo.txt')
+    config_home = os.path.join(os.path.expanduser('~'), '.config')
+dbfile = os.path.join(config_home, 'ninlyrics', 'dbinfo.txt')
 if os.path.exists(dbfile):
     with open(dbfile) as df:
         for line in df.readlines():
