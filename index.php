@@ -209,7 +209,7 @@ function do_search_box()
     ?>
     <div class="searchterms">
     <div class="searchtitle">Search for Phrases</div>
-    <form method="GET" action="index.php">
+    <form method="GET" action="index.php" onSubmit="enableAlbumsRestrict();">
     <table>
     <tr>
     <th>Phrase containing:</th>

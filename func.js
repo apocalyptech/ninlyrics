@@ -34,3 +34,12 @@ function checkAlbumsRestrict()
         }
     }
 }
+
+function enableAlbumsRestrict()
+{
+    var checkbox = document.getElementById('albums_restrict');
+    if (checkbox)
+    {
+        checkbox.disabled = 0;
+    }
+}
