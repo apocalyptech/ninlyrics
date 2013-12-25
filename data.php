@@ -94,6 +94,11 @@ function data_get_albums()
  *  - albums: Key should be an array containing the numeric IDs of albums in
  *            which the phrase will be contained.
  *
+ *  - albums_restrict: Key should be a boolean which specifies whether the
+ *                *_songs and *_albums parameters should be restricted to the
+ *                specified albums, or whether they should apply to the global
+ *                stats.  Defaults to "true."
+ *
  * The "sort" parameter should be one of the following:
  *
  *  - phrase_up, phrase_down: sort by phrase
@@ -123,6 +128,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
     $complex = false;
     $tables = 'phrase p';
     $count = 0;
+    $albums_restrict = false;
 
     // Process our constraints
     $params = array();
@@ -130,13 +136,13 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
     $songcount_q_sql = '';
     if (is_array($constraints))
     {
-        // Process "albums" first because our SQL gets more complex if we limit by
+
+        // Process "albums" next because our SQL gets more complex if we limit by
         // album.
         if (array_key_exists('albums', $constraints))
         {
             $val = $constraints['albums'];
 
-            $complex = true;
             if (!is_array($val))
             {
                 $val = array($val);
@@ -148,13 +154,33 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
             foreach ($val as $album)
             {
                 array_push($albums_temp, 'albumcount_' . (int)$album . '=1');
+
+                // These two aren't actually used if $albums_restrict==false, but
+                // there's no harm in setting them.
                 array_push($albumcount_q_arr, 'albumcount_' . (int)$album);
                 array_push($songcount_q_arr, 'songcount_' . (int)$album);
             }
             array_push($where_arr, '(' . implode(' or ', $albums_temp) . ')');
 
+            // Again, these two aren't really necessary if $albums_restrict==false,
+            // but we'll set them anyway.
             $songcount_q_sql = '(' . implode('+', $songcount_q_arr) . ')';
             $albumcount_q_sql = '(' . implode('+', $albumcount_q_arr) . ')';
+
+            // Figure out if we're restricting by album or not.  We don't want to
+            // set this until after our album loop, in case we didn't actually
+            // have any albums with which to filter.
+            if (count($albums_temp)  > 0)
+            {
+                $albums_restrict = true;
+                if (array_key_exists('albums_restrict', $constraints))
+                {
+                    if ($constraints['albums_restrict'] === false)
+                    {
+                        $albums_restrict = false;
+                    }
+                }
+            }
         }
      
         // Now process everything else
@@ -186,7 +212,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
                     break;
 
                 case 'min_songs':
-                    if ($complex)
+                    if ($albums_restrict)
                     {
                         array_push($where_arr, $songcount_q_sql . ' >= :min_songs');
                     }
@@ -198,7 +224,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
                     break;
 
                 case 'max_songs':
-                    if ($complex)
+                    if ($albums_restrict)
                     {
                         array_push($where_arr, $songcount_q_sql . ' <= :max_songs');
                     }
@@ -210,7 +236,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
                     break;
 
                 case 'min_albums':
-                    if ($complex)
+                    if ($albums_restrict)
                     {
                         array_push($where_arr, $albumcount_q_sql . ' >= :min_albums');
                     }
@@ -222,7 +248,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
                     break;
 
                 case 'max_albums':
-                    if ($complex)
+                    if ($albums_restrict)
                     {
                         array_push($where_arr, $albumcount_q_sql . ' <= :max_albums');
                     }
@@ -290,7 +316,7 @@ function data_do_search($constraints, $sort, &$count, $pagesize, $startat=0)
     // Run the SQL
     $fields = 'distinct phrase, wordcount, songcount, albumcount';
     $fields_no_count = '';
-    if ($complex)
+    if ($albums_restrict)
     {
         if ($albumcount_q_sql != '')
         {

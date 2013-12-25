@@ -24,6 +24,12 @@ else
     array_push($errors, 'Unable to get database connection');
 }
 
+// Set our default for albums_restrict checkbox.
+if (!array_key_exists('min_words', $_REQUEST))
+{
+    $_REQUEST['albums_restrict'] = true;
+}
+
 function html_text($name, $size=1, $maxlength=null)
 {
     print '<input type="text" name="' . $name . '" id="' . $name . '" size="' . $size . '"';
@@ -34,6 +40,16 @@ function html_text($name, $size=1, $maxlength=null)
     if (array_key_exists($name, $_REQUEST))
     {
         print ' value="' . htmlentities($_REQUEST[$name]) . '"';
+    }
+    print ">\n";
+}
+
+function html_checkbox($name)
+{
+    print '<input type="checkbox" name="' . $name . '" id="' . $name . '"';
+    if (array_key_exists($name, $_REQUEST))
+    {
+        print ' checked';
     }
     print ">\n";
 }
@@ -216,6 +232,11 @@ function do_search_box()
     </tr>
     <tr>
     <td>&nbsp;</td>
+    <td colspan="2">Restrict "Number of Albums" and "Number of Songs" by selected albums?
+    <? html_checkbox('albums_restrict'); ?></td>
+    </tr>
+    <tr>
+    <td>&nbsp;</td>
     <td colspan="2"><input type="submit" value="Search"></td>
     </tr>
     <tr>
@@ -302,6 +323,14 @@ function do_search()
             }
             array_push($constraints_eng, 'In Album' . $plural . ': ' . implode(', ', $albumlist_eng));
         }
+    }
+    if (array_key_exists('albums_restrict', $_REQUEST))
+    {
+        $constraints['albums_restrict'] = true;
+    }
+    else
+    {
+        $constraints['albums_restrict'] = false;
     }
 
     // Read sort value from our $_REQUEST

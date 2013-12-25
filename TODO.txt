@@ -11,6 +11,8 @@
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
 * The sort arrows might make more sense the other way around?
+* Make sure we're using <?php everywhere instead of just <?
+* Javascript to disable the albums_restrict checkbox
 
 * We might be over-pruning our phrase list.  For example, a search
   for "button" will yield three phrases, all from Capital G:
@@ -23,15 +25,3 @@
   something important to catalog.  It's not entirely important, really,
   as that kind of pruning wouldn't happen for phrases between songs,
   but maybe we should alter things anyway...
-
-* Okay, okay...  The interaction of the album select box and the rest
-  of the aggregate stats needs to be clarified and expanded.  I think
-  most notably, the albumcount and songcount numbers need to have options
-  to specify whether they apply to ONLY the specific albums selected,
-  or if they can apply to all albums.  Case in point, if you select
-  (TDS, 2songs, 5words), you'll see "nothing can stop me now" in the
-  list.  That appears in TDS, Fragile, and WT.  If you change th album
-  dropdown to just Fragile, or just WT (while leaving 2songs+5words),
-  you won't see it in the list because the phrase only appears in ONE
-  song for each of those albums.  That makes *sense* but I think it'll
-  end up being counterintuitive.
