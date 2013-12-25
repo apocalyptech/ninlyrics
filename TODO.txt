@@ -11,6 +11,10 @@
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
 * The sort arrows might make more sense the other way around?
+* Javascript highlighting when search options are guaranteed to
+  produce zero results?  (Most notably when the "Min Number of Albums"
+  field is higher than the number of albums selected, and our album-
+  restriction checkbox is on.)
 
 * We might be over-pruning our phrase list.  For example, a search
   for "button" will yield three phrases, all from Capital G:
