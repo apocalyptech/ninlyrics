@@ -209,31 +209,31 @@ function do_search_box()
     <table>
     <tr>
     <th>Phrase containing:</th>
-    <td colspan="2"><? html_text('text', 25); ?></td>
+    <td colspan="2"><?php html_text('text', 25); ?></td>
     </tr>
     <tr>
     <th>Words in Phrase:</th>
-    <td>At least: <? html_text('min_words'); ?></td>
-    <td>At most: <? html_text('max_words'); ?></td>
+    <td>At least: <?php html_text('min_words'); ?></td>
+    <td>At most: <?php html_text('max_words'); ?></td>
     </tr>
     <tr>
     <th>Number of Albums:</th>
-    <td>At least: <? html_text('min_albums'); ?></td>
-    <td>At most: <? html_text('max_albums'); ?></td>
+    <td>At least: <?php html_text('min_albums'); ?></td>
+    <td>At most: <?php html_text('max_albums'); ?></td>
     </tr>
     <tr>
     <th>Number of Songs:</th>
-    <td>At least: <? html_text('min_songs'); ?></td>
-    <td>At most: <? html_text('max_songs'); ?></td>
+    <td>At least: <?php html_text('min_songs'); ?></td>
+    <td>At most: <?php html_text('max_songs'); ?></td>
     </tr>
     <tr>
     <th>Only Albums:</th>
-    <td colspan="2"><? html_select('albums', $albums, 'aid', 'atitle', true); ?></td>
+    <td colspan="2"><?php html_select('albums', $albums, 'aid', 'atitle', true); ?></td>
     </tr>
     <tr>
     <td>&nbsp;</td>
     <td colspan="2">Restrict "Number of Albums" and "Number of Songs" by selected albums?
-    <? html_checkbox('albums_restrict'); ?></td>
+    <?php html_checkbox('albums_restrict'); ?></td>
     </tr>
     <tr>
     <td>&nbsp;</td>
@@ -246,7 +246,7 @@ function do_search_box()
     </table>
     </form>
     </div>
-    <?
+    <?php
 }
 
 function do_search()
@@ -363,7 +363,7 @@ function do_search()
         <div class="constraints">
         <strong>Search constraints:</strong>
         <ul>
-        <?
+        <?php
         foreach ($constraints_eng as $eng)
         {
             print '<li>' . $eng . "</li>\n";
@@ -371,7 +371,7 @@ function do_search()
         ?>
         </ul>
         </div>
-        <?
+        <?php
     }
 
     // Figure out if we're paging

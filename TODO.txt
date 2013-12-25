@@ -11,7 +11,6 @@
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
 * The sort arrows might make more sense the other way around?
-* Make sure we're using <?php everywhere instead of just <?
 * Javascript to disable the albums_restrict checkbox
 
 * We might be over-pruning our phrase list.  For example, a search
