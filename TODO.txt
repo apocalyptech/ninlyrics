@@ -11,7 +11,8 @@
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
 * The sort arrows might make more sense the other way around?
-* Javascript to disable the albums_restrict checkbox
+* Disabled albums_restrict checkbox doesn't carry over between
+  requests...
 
 * We might be over-pruning our phrase list.  For example, a search
   for "button" will yield three phrases, all from Capital G:

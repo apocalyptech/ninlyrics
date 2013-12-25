@@ -83,3 +83,13 @@ BODY {
     font-style: italic;
     font-weight: bold;
 }
+
+.restrict_cell_off {
+    font-style: italic;
+    color: #999;
+}
+
+.restrict_cell_on {
+    font-style: normal;
+    color: #000;
+}

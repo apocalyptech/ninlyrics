@@ -54,17 +54,21 @@ function html_checkbox($name)
     print ">\n";
 }
 
-function html_select($name, $data, $id_var, $text_var, $multiple=false)
+function html_select($name, $data, $id_var, $text_var, $multiple=false, $on_change='')
 {
     print '<select name="' . $name;
     if ($multiple)
     {
         print '[]';
     }
-    print '" size="' . count($data) . '"';
+    print '" id="' . $name . '" size="' . count($data) . '"';
     if ($multiple)
     {
         print ' multiple';
+    }
+    if ($on_change != '')
+    {
+        print ' onChange="' . $on_change . '"';
     }
     print ">\n";
     foreach ($data as $item)
@@ -228,11 +232,11 @@ function do_search_box()
     </tr>
     <tr>
     <th>Only Albums:</th>
-    <td colspan="2"><?php html_select('albums', $albums, 'aid', 'atitle', true); ?></td>
+    <td colspan="2"><?php html_select('albums', $albums, 'aid', 'atitle', true, 'checkAlbumsRestrict();'); ?></td>
     </tr>
-    <tr>
+    <tr style="disabled: true;">
     <td>&nbsp;</td>
-    <td colspan="2">Restrict "Number of Albums" and "Number of Songs" by selected albums?
+    <td colspan="2" id="restrict_cell">Restrict "Number of Albums" and "Number of Songs" by selected albums?
     <?php html_checkbox('albums_restrict'); ?></td>
     </tr>
     <tr>
@@ -516,7 +520,7 @@ function do_search()
 <link rel="stylesheet" type="text/css" media="all" href="main.css">
 <script type="text/javascript" src="func.js"></script>
 </head>
-<body>
+<body onLoad="checkAlbumsRestrict();">
 <?php
 if (count($errors) > 0)
 {

@@ -13,3 +13,24 @@ function toggleLyrics(sid)
         }
     }
 }
+
+function checkAlbumsRestrict()
+{
+    var albumlist = document.getElementById('albums');
+    var textcell = document.getElementById('restrict_cell');
+    var checkbox = document.getElementById('albums_restrict');
+    var i=0;
+    if (albumlist && textcell && checkbox)
+    {
+        if (albumlist.selectedIndex < 0)
+        {
+            textcell.className='restrict_cell_off';
+            checkbox.disabled = 1
+        }
+        else
+        {
+            textcell.className='restrict_cell_on';
+            checkbox.disabled = 0
+        }
+    }
+}
