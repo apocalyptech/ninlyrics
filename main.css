@@ -93,3 +93,14 @@ BODY {
     font-style: normal;
     color: #000;
 }
+
+.no_results {
+    color: red;
+}
+.no_results_text_on {
+    display: table-row;
+    font-weight: bold;
+}
+.no_results_text_off {
+    display: none;
+}

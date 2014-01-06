@@ -30,12 +30,16 @@ if (!array_key_exists('min_words', $_REQUEST))
     $_REQUEST['albums_restrict'] = true;
 }
 
-function html_text($name, $size=1, $maxlength=null)
+function html_text($name, $size=1, $maxlength=null, $onChange=null)
 {
     print '<input type="text" name="' . $name . '" id="' . $name . '" size="' . $size . '"';
     if (!is_null($maxlength))
     {
         print ' maxlength="' . $maxlength . '"';
+    }
+    if (!is_null($onChange))
+    {
+        print ' onChange="' . $onChange . '"';
     }
     if (array_key_exists($name, $_REQUEST))
     {
@@ -44,9 +48,13 @@ function html_text($name, $size=1, $maxlength=null)
     print ">\n";
 }
 
-function html_checkbox($name)
+function html_checkbox($name, $onChange=null)
 {
     print '<input type="checkbox" name="' . $name . '" id="' . $name . '"';
+    if (!is_null($onChange))
+    {
+        print ' onChange="' . $onChange . '"';
+    }
     if (array_key_exists($name, $_REQUEST))
     {
         print ' checked';
@@ -222,7 +230,7 @@ function do_search_box()
     </tr>
     <tr>
     <th>Number of Albums:</th>
-    <td>At least: <?php html_text('min_albums'); ?></td>
+    <td id="noresults_1">At least: <?php html_text('min_albums', 1, null, 'checkAlbumsRestrict();'); ?></td>
     <td>At most: <?php html_text('max_albums'); ?></td>
     </tr>
     <tr>
@@ -231,13 +239,17 @@ function do_search_box()
     <td>At most: <?php html_text('max_songs'); ?></td>
     </tr>
     <tr>
-    <th>Only Albums:</th>
+    <th id="noresults_2">Only Albums:</th>
     <td colspan="2"><?php html_select('albums', $albums, 'aid', 'atitle', true, 'checkAlbumsRestrict();'); ?></td>
     </tr>
     <tr style="disabled: true;">
     <td>&nbsp;</td>
     <td colspan="2" id="restrict_cell">Restrict "Number of Albums" and "Number of Songs" by selected albums?
-    <?php html_checkbox('albums_restrict'); ?></td>
+    <?php html_checkbox('albums_restrict', 'checkAlbumsRestrict();'); ?></td>
+    </tr>
+    <tr id="no_results_text" class="no_results no_results_text">
+    <td>&nbsp;</td>
+    <td colspan="2"><hr>Note: with the currently-selected search terms, no results will be returned.<hr></td>
     </tr>
     <tr>
     <td>&nbsp;</td>
