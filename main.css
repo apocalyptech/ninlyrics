@@ -5,6 +5,10 @@ BODY {
     margin-right: auto;
 }
 
+.searchtable tr th, .searchtable tr td {
+    vertical-align: middle;
+}
+
 .errors {
     color: red;
 }
@@ -18,8 +22,13 @@ BODY {
 }
 
 .searchterms table tr th {
-    vertical-align: top;
+    vertical-align: middle;
     text-align: right;
+}
+
+.searchterms table tr th.searchtop {
+    padding-top: .3em;
+    vertical-align: top;
 }
 
 .searchtitle {

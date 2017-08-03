@@ -62,14 +62,14 @@ function checkAlbumsRestrict()
         if (no_results_highlight)
         {
             highlight_1.className='no_results';
-            highlight_2.className='no_results';
+            highlight_2.className='no_results searchtop';
             textcell.className += ' no_results';
             no_results_text.className='no_results no_results_text_on';
         }
         else
         {
             highlight_1.className='';
-            highlight_2.className='';
+            highlight_2.className='searchtop';
             // No need to set class for textcell
             no_results_text.className='no_results_text_off';
         }

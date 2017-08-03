@@ -220,26 +220,26 @@ function do_search_box()
     <form method="GET" action="index.php" onSubmit="enableAlbumsRestrict();">
     <table>
     <tr>
-    <th>Phrase containing:</th>
+    <th>Contains:</th>
     <td colspan="2"><?php html_text('text', 25); ?></td>
     </tr>
     <tr>
-    <th>Words in Phrase:</th>
+    <th><nobr># Words:</nobr></th>
     <td>At least: <?php html_text('min_words'); ?></td>
     <td>At most: <?php html_text('max_words'); ?></td>
     </tr>
     <tr>
-    <th>Number of Albums:</th>
+    <th><nobr># Albums:</nobr></th>
     <td id="noresults_1">At least: <?php html_text('min_albums', 1, null, 'checkAlbumsRestrict();'); ?></td>
     <td>At most: <?php html_text('max_albums'); ?></td>
     </tr>
     <tr>
-    <th>Number of Songs:</th>
+    <th><nobr># Songs:</nobr></th>
     <td>At least: <?php html_text('min_songs'); ?></td>
     <td>At most: <?php html_text('max_songs'); ?></td>
     </tr>
     <tr>
-    <th id="noresults_2">Only Albums:</th>
+    <th id="noresults_2" class="searchtop"><nobr>Only Albums:</nobr></th>
     <td colspan="2"><?php html_select('albums', $albums, 'aid', 'atitle', true, 'checkAlbumsRestrict();'); ?></td>
     </tr>
     <tr style="disabled: true;">
