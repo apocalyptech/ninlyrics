@@ -126,10 +126,12 @@ phrases_album = {}
 phrases_song = {}
 
 # Truncate everything first
+dbcurs.execute('set foreign_key_checks = 0')
 dbcurs.execute('truncate p2s')
 dbcurs.execute('truncate phrase')
 dbcurs.execute('truncate song')
 dbcurs.execute('truncate album')
+dbcurs.execute('set foreign_key_checks = 1')
 dbconn.commit()
 
 # Clean up our 'phrase' table
