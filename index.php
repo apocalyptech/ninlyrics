@@ -172,7 +172,12 @@ function modify_querystring($name, $val)
 
 function do_phrase()
 {
-    $phrase = preg_replace('/[^a-zA-Z\' ]/', '', trim($_REQUEST['phrase']));
+    $phrase = trim($_REQUEST['phrase']);
+
+    // Trim off any non-word chars from beginning or end; those would screw up
+    // our \b matching for highlighting.
+    $regex_phrase = preg_replace('/^\W*(.*?)\W*$/', '\1', $phrase);
+
     $songlist = data_get_songlist($phrase);
     if (count($songlist) > 0)
     {
@@ -198,7 +203,7 @@ function do_phrase()
             print '<tr class="lyrics" id="lyrics_' . $data['sid'] . "\" style=\"display: none;\">\n";
             print "<td colspan=\"2\">\n";
             print "<blockquote><pre>";
-            print preg_replace('/\b(' . $phrase . ')\b/i', '<span class="hiphrase">\1</span>', $data['lyrics']);
+            print preg_replace('/\b(' . $regex_phrase . ')\b/i', '<span class="hiphrase">\1</span>', $data['lyrics']);
             print "</pre></blockquote>\n";
             print "</td>\n";
             print "</tr>\n";
