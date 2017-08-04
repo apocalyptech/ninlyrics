@@ -34,7 +34,13 @@ BODY {
 .searchtitle {
     text-align: center;
     font-weight: bold;
-    margin-bottom: 1em;
+    margin-bottom: .5em;
+}
+
+.searchnote {
+    text-align: center;
+    font-style: italic;
+    margin-bottom: .5em;
 }
 
 .evenrow {
