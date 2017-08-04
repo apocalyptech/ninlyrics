@@ -217,7 +217,7 @@ function do_search_box()
     ?>
     <div class="searchterms">
     <div class="searchtitle">Search for Phrases</div>
-    <div class="searchnote">Note: text searches will match on substrings</div>
+    <div class="searchnote">Note: text searches will match on substrings.<br>Minimum text search length is 3.</div>
     <form method="GET" action="index.php" onSubmit="enableAlbumsRestrict();">
     <table>
     <tr>
@@ -305,7 +305,7 @@ function do_search()
     if (array_key_exists('text', $_REQUEST))
     {
         $text = trim($_REQUEST['text']);
-        if ($text != '')
+        if ($text != '' and strlen($text) > 2)
         {
             $constraints['text'] = $text;
             array_push($constraints_eng, 'Phrase Contains: "' . htmlentities($text) .'"');
