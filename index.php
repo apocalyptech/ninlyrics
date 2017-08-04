@@ -227,7 +227,7 @@ function do_search_box()
     ?>
     <div class="searchterms">
     <div class="searchtitle">Search for Phrases</div>
-    <div class="searchnote">Note: text searches will match on substrings.<br>Minimum text search length is 3.</div>
+    <div class="searchnote">Note: text searches will match on substrings.<br>Minimum text search length is 3 letters.</div>
     <form method="GET" action="index.php" onSubmit="enableAlbumsRestrict();">
     <table>
     <tr>
@@ -549,7 +549,7 @@ function do_about()
     <h2>Interesting Results</h2>
 
     <p>
-    These were noted in August 2017, btw, after the release of ADD VIOLENCE.
+    These were noted in August 2017, after the release of ADD VIOLENCE.
     Future releases (or updates to our lyric database) may, of course, change
     this around somewhat.  I'll endeavor to keep this up to date as the DB
     changes, though.
@@ -575,9 +575,16 @@ function do_about()
     "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 96 songs,
     compared to 98 for "<a href="index.php?min_songs=2&albums_restrict=1&phrase=you">you</a>".
     </li>
-    <li>Surprisingly,
-    "<a href="index.php?text=starfuckers&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums_restrict=on">starfuckers</a>"
-    only appears in a single track!</li>
+    <li>Profanity Index!
+        <ul>
+        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fucking">fucking</a> - 14 songs, 8 albums</li>
+        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fuck">fuck</a> - 12 songs, 6 albums</li>
+        <li><a href="index.php?text=shit&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=shit">shit</a> - 8 songs, 4 albums</li>
+        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fucked">fucked</a> - 3 songs, 3 albums</li>
+        <li><a href="index.php?text=piss&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=piss">piss</a> - 2 songs, 2 albums</li>
+        <li><a href="index.php?text=starfuckers&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=starfuckers">starfuckers</a> - surprisingly, only a single song!</li>
+        </ul>
+    </li>
     </ul>
 
     <p>Let me know if you think anything else deserves to be noted in here.</p>
