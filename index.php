@@ -198,7 +198,7 @@ function do_phrase()
             print '<tr class="lyrics" id="lyrics_' . $data['sid'] . "\" style=\"display: none;\">\n";
             print "<td colspan=\"2\">\n";
             print "<blockquote><pre>";
-            print preg_replace('/(' . $phrase . ')/i', '<span class="hiphrase">\1</span>', $data['lyrics']);
+            print preg_replace('/\b(' . $phrase . ')\b/i', '<span class="hiphrase">\1</span>', $data['lyrics']);
             print "</pre></blockquote>\n";
             print "</td>\n";
             print "</tr>\n";
