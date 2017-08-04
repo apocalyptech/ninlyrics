@@ -244,7 +244,7 @@ function do_search_box()
     </tr>
     <tr style="disabled: true;">
     <td>&nbsp;</td>
-    <td colspan="2" id="restrict_cell">Restrict "Number of Albums" and "Number of Songs" by selected albums?
+    <td colspan="2" id="restrict_cell">Limit "<b># Albums</b>" and "<b># Songs</b>" to selected albums?
     <?php html_checkbox('albums_restrict', 'checkAlbumsRestrict();'); ?></td>
     </tr>
     <tr id="no_results_text" class="no_results no_results_text_off">
