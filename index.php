@@ -558,10 +558,9 @@ function do_about()
     <h2>About</h2>
 
     <p>
-    This page is a database of Nine Inch Nails lyrics, with an eye to digging
-    into lyrics across multiple NIN songs to notice patterns.  There's a number
-    of lyrical themes which pop up from time to time in NIN songs (one pretty
-    obvious one is "nothing can stop me now"), and I thought it would be fun to
+    This is a database of Nine Inch Nails lyrics.  There's a number
+    of lyrical themes which pop up from time to time in NIN songs ("nothing can
+    stop me now" for instance), and I thought it would be fun to
     write something which would make it easier to find patterns which might
     be more easily overlooked.
     </p>
@@ -573,10 +572,9 @@ function do_about()
     certain number of words, use the <strong># Words</strong> boxes.  If you
     only want to get results which appear in more than one album, or more
     than one song, use <strong># Albums</strong> and/or <strong># Songs</strong>.
-    You can also specify to only search within certain albums (see below for
-    which songs are grouped with which album), use the <strong>Only Albums</strong>
-    listbox.  You should be able to select multiple ones using
-    <tt>Ctrl</tt>/<tt>Shift</tt>/etc, as usual.
+    You can also specify to search within certain albums, with the
+    <strong>Only Albums</strong> listbox.  You should be able to select multiple
+    albums using <tt>Ctrl</tt>/<tt>Shift</tt>/etc, as usual.
     </p>
 
     <p>
@@ -666,7 +664,7 @@ function do_about()
     PHM, like <em>Purest Feeling</em>, since TR's effectively disavowed those.  I've
     also excluded the various "reworked" remixes such as <em>Closer To God</em>
     which technically add extra lyrics but are largely the same as their source
-    material.
+    material.  Also missing is HTDA, again on purpose.
     </p>
 
     <p>
