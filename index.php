@@ -586,11 +586,11 @@ function do_about()
     there are five tracks which contain the word "cracks," four of which are in
     With Teeth.  If you select "With Teeth (and related)", specify "at least 5" for
     <strong># Songs</strong>, and leave the checkbox active,
-    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=1&albums_restrict=on">no results will be found</a>.
+    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=5&albums_restrict=on">no results will be found</a>.
     If you disable the checkbox, though,
-    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=1">you'll see the results</a>.
+    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=5">you'll see the results</a>.
     Alternatively, if you search for "nothing can stop me now" with "The Slip"
-    selected, you'll <a href="index.php?text=nothing+can+stop+me+now&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums[]=8">never get any results regardless of the checkbox</a>, since that
+    selected, you'll <a href="index.php?text=nothing+can+stop+me+now&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums[]=7">never get any results regardless of the checkbox</a>, since that
     phrase doesn't appear anywhere in The Slip.
     </p>
     

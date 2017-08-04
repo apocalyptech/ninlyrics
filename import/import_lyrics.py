@@ -115,7 +115,7 @@ for root, dirs, files in os.walk(lyricsdir):
 
 # Read through each album and process
 albums = []
-for filename in filenames:
+for filename in sorted(filenames):
     albums.append(Album(filename))
 
 # Now start importing into the DB
