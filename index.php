@@ -18,7 +18,10 @@ if (data_have_db())
     if (!array_key_exists('min_songs', $_REQUEST))
     {
         $_REQUEST['min_songs'] = 2;
-        $action = 'about';
+        if (!array_key_exists('albums', $_REQUEST))
+        {
+            $action = 'about';
+        }
     }
 }
 else
