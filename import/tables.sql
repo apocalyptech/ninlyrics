@@ -10,7 +10,7 @@ create table album (
     atitle varchar(100) not null,
     year int not null,
     primary key (aid)
-) type=innodb;
+) engine=innodb;
 
 create table song (
     sid int not null auto_increment,
@@ -19,7 +19,7 @@ create table song (
     lyrics text,
     primary key (sid),
     foreign key fk_aid (aid) references album (aid)
-) type=innodb;
+) engine=innodb;
 
 -- The various "count" fields here are denormalized, but it
 -- simplifies our SQL quite a bit, and it's not like this data
@@ -34,7 +34,7 @@ create table phrase (
     albumcount int not null default 1,
     primary key (pid),
     unique index idx_phrase (phrase)
-) type=innodb;
+) engine=innodb;
 
 -- Some denormalization here, but having aid in p2s allows us to
 -- skip some JOINs that we'd otherwise have to do when searching
@@ -47,4 +47,4 @@ create table p2s (
     foreign key fk_pid (pid) references phrase (pid),
     foreign key fk_sid (sid) references song (sid),
     foreign key fk_aid (aid) references album (aid)
-) type=innodb;
+) engine=innodb;
