@@ -596,6 +596,20 @@ function do_about()
     phrase doesn't appear anywhere in The Slip.
     </p>
     
+    <h2>Changes / Contributing / Contact</h2>
+
+    <p>
+    The full sourcecode is available <a href="https://github.com/apocalyptech/ninlyrics">here
+    on GitHub</a>.  If you're GitHub savvy, feel free to send me any pull request you
+    think is worth merging.
+    </p>
+
+    <p>
+    Even if you're not GitHub savvy, feel free to let me know if anything seems amiss,
+    or if you think something should be done differently on this.  I'm "xolotl" on ETS,
+    or feel free to email me at <tt>cj@apocalyptech.com</tt>.
+    </p>
+
     <h2>Interesting Results</h2>
 
     <p>
@@ -644,13 +658,13 @@ function do_about()
     <p>
     This database is primarily concerned with the "main" NIN releases, though I've
     included various B-sides and extra content where it seemed appropriate.  I've
-    purposefully excluded any covers from here, so songs like <em>Get Down Make Love</em>,
+    purposefully excluded any covers, so songs like <em>Get Down Make Love</em>,
     <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a corner
     case I remain a little undecided on, since that was originally Pigface but TR
     obviously had some input into it.  So far I've left that one out.  I've also
     intentionally excluded the handful of early demo songs which never made it to
     PHM, like <em>Purest Feeling</em>, since TR's effectively disavowed those.  I've
-    also so far excluded the various "reworked" remixes such as <em>Closer To God</em>
+    also excluded the various "reworked" remixes such as <em>Closer To God</em>
     which technically add extra lyrics but are largely the same as their source
     material.
     </p>
@@ -660,18 +674,17 @@ function do_about()
     official lyric sheets which aren't actually present in the songs themselves.
     There's a bit of that in PHM, and a <em>lot</em> of it in Not The Actual
     Events.  I've excluded most of the "extra" lyrics though I'm sure a
-    few have slipped through.  There's also occasional minor differences in the
+    few have slipped through.  There's also occasional minor differences between the
     printed lyrics and what's actually sung; I've tended to keep with the
-    printed version in those cases.  I've also left in the English translation
-    of the spoken bits in <em>La Mer</em>.  It's perhaps worth noting that I
-    believe the lyrics were largely copy+pasted from <a href="http://nin.wiki">nin.wiki</a>
-    back in 2014, rather than copied by hand, so I've not actually manually
-    checked any of these versus the printed sheets.  They've been edited for
-    formatting, though, so they can be imported more usefully into this app.
+    printed version in those cases.  It's perhaps worth noting that I
+    think the lyrics were originally copy+pasted from <a href="http://nin.wiki">nin.wiki</a>
+    back in 2014, rather than copied from lyric sheets by hand, so I've not
+    actually manually checked any of these versus the printed sheets.  I've
+    included the English translation of the spoken bits in <em>La Mer</em>.
     </p>
 
     <p>
-    I've currently lumped in <em>The Perfect Drug</em> into "The Fragile (and related)"
+    I've currently lumped <em>The Perfect Drug</em> into "The Fragile (and related)"
     since it appeared on one of the <em>We're In This Together</em> EPs.  It didn't
     really seem right to have it out on its own.
     </p>
