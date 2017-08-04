@@ -12,10 +12,13 @@ if (data_have_db())
         $action = 'phrase';
     }
 
-    // Default to requiring 2 songs for phrases
+    // Default to requiring 2 songs for phrases; also if
+    // we don't have min_songs in $_REQUEST, we're on
+    // the "main" page; so default to about.
     if (!array_key_exists('min_songs', $_REQUEST))
     {
         $_REQUEST['min_songs'] = 2;
+        $action = 'about';
     }
 }
 else
@@ -265,10 +268,11 @@ function do_search_box()
     </tr>
     <tr>
     <td>&nbsp;</td>
-    <td colspan="2"><input type="button" value="Reset to Defaults" onClick="document.location='index.php';"></td>
+    <td colspan="2"><input type="button" value="Reset to Defaults" onClick="document.location='index.php?text=&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on';"></td>
     </tr>
     </table>
     </form>
+    <p><a href="index.php">Docs / Information</a></p>
     </div>
     <?php
 }
@@ -539,6 +543,238 @@ function do_search()
     print "</div>\n";
 }
 
+function do_about()
+{
+    ?>
+    <h2>Interesting Results</h2>
+
+    <p>
+    These were noted in August 2017, btw, after the release of ADD VIOLENCE.
+    Future releases (or updates to our lyric database) may, of course, change
+    this around somewhat.  I'll endeavor to keep this up to date as the DB
+    changes, though.
+    </p>
+
+    <ul>
+    <li>
+    The
+    <a href="index.php?text=&min_words=6&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on">longest phrases occurring in more than one album</a>
+    are six words long:
+    "<a href="index.php?text=&min_words=6&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=i'm+on+my+hands+and+knees">i'm on my hands and knees</a>,"
+    "<a href="index.php?text=&min_words=6&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=just+for+the+fuck+of+it">just for the fuck of it</a>,"
+    and "<a href="index.php?text=&min_words=6&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=of+who+i+used+to+be">of who I used to be</a>."
+    </li>
+    <li>The ubiquitous "<a href="index.php?text=&min_words=5&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=nothing+can+stop+me+now">nothing can stop me now</a>"
+    can be found in five songs across three albums.</li>
+    <li>When we drop down to three-word phrases,
+    "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=i+don%27t+know">I don't know</a>"
+    tops the bunch, appearing in ten songs across six albums.
+    "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=used+to+be">used to be</a>"
+    gets pretty close: ten songs, but only across five albums.</li>
+    <li>For all of TR's lyrical self-absorbtion,
+    "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 96 songs,
+    compared to 98 for "<a href="index.php?min_songs=2&albums_restrict=1&phrase=you">you</a>".
+    </li>
+    <li>Surprisingly,
+    "<a href="index.php?text=starfuckers&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums_restrict=on">starfuckers</a>"
+    only appears in a single track!</li>
+    </ul>
+
+    <p>Let me know if you think anything else deserves to be noted in here.</p>
+
+    <h2>Songs In Database</h2>
+
+    <p>
+    This database is primarily concerned with the "main" NIN releases, though I've
+    included various B-sides and extra content where it seemed appropriate.  I've
+    purposefully excluded any covers from here, so song like <em>Get Down Make Love</em>,
+    <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a corner
+    case I remain a little undecided on, since that was originally Pigface but TR
+    obviously had some input into it.  So far I've left that one out.  I've also
+    intentionally excluded the handful of early demo songs which never made it to
+    PHM, like <em>Purest Feeling</em>, since TR's effectively disavowed those.  I've
+    also so far excluded the various "reworked" remixes such as <em>Closer To God</em>
+    which technically add extra lyrics but are largely the same as their source
+    material.
+    </p>
+
+    <p>
+    One question I've struggled with is the inclusion of lyrics printed in the
+    official lyric sheets which aren't actually present in the songs themselves.
+    There's a bit of that in PHM, and a <em>lot</em> of it in Not The Actual
+    Events.  I've excluded most of the "extra" lyrics though I'm sure a
+    few have slipped through.  There's also occasional minor differences in the
+    printed lyrics and what's actually sung; I've tended to keep with the
+    printed version in those cases.  I've also left in the English translation
+    of the spoken bits in <em>La Mer</em>.  It's perhaps worth noting that I
+    believe the lyrics were largely copy+pasted from <a href="http://nin.wiki">nin.wiki</a>
+    back in 2014, rather than copied by hand, so I've not actually manually
+    checked any of these versus the printed sheets.  They've been edited for
+    formatting, though, so they can be imported more usefully into this app.
+    </p>
+
+    <p>
+    I've currently lumped in <em>The Perfect Drug</em> into "The Fragile (and related)"
+    since it appeared on one of the <em>We're In This Together</em> EPs.  It didn't
+    really seem right to have it out on its own.
+    </p>
+
+    <p>
+    If you've got any arguments for doing things differently in here which you
+    think could sway my current decisions, definitely feel free to get in contact.
+    The source lyric textfiles used in the database are available
+    <a href="https://github.com/apocalyptech/ninlyrics/tree/master/import/albums">here
+    on Github</a>.
+    </p>
+
+    <ul>
+    <li><strong>Pretty Hate Machine</strong>
+        <ul>
+        <li>Head Like a Hole</li>
+        <li>Terrible Lie</li>
+        <li>Down In It</li>
+        <li>Sanctified</li>
+        <li>Something I Can Never Have</li>
+        <li>Kinda I Want To</li>
+        <li>Sin</li>
+        <li>That's What I Get</li>
+        <li>The Only Time</li>
+        <li>Ringfinger</li>
+        </ul>
+        </li>
+    <li><strong>Broken</strong>
+        <ul>
+        <li>Wish</li>
+        <li>Last</li>
+        <li>Happiness in Slavery</li>
+        <li>Gave Up</li>
+        </ul>
+        </li>
+    <li><strong>The Downward Spiral</strong>
+        <ul>
+        <li>Mr. Self Destruct</li>
+        <li>Piggy</li>
+        <li>Heresy</li>
+        <li>March of the Pigs</li>
+        <li>Closer</li>
+        <li>Ruiner</li>
+        <li>The Becoming</li>
+        <li>I Do Not Want This</li>
+        <li>Big Man With a Gun</li>
+        <li>Eraser</li>
+        <li>Reptile</li>
+        <li>The Downward Spiral</li>
+        <li>Hurt</li>
+        </ul>
+        </li>
+    <li><strong>The Fragile (and related)</strong>
+        <ul>
+        <li>Somewhat Damaged</li>
+        <li>The Day The World Went Away</li>
+        <li>The Wretched</li>
+        <li>We're In This Together</li>
+        <li>The Fragile</li>
+        <li>Even Deeper</li>
+        <li>No, You Don't</li>
+        <li>La Mer <em>(English translation)</em></li>
+        <li>The Great Below</li>
+        <li>Into the Void</li>
+        <li>Where is Everybody?</li>
+        <li>Please</li>
+        <li>Starfuckers, Inc.</li>
+        <li>I'm Looking Forward to Joining You, Finally</li>
+        <li>The Big Come Down</li>
+        <li>Underneath It All</li>
+        <li>10 Miles High</li>
+        <li>The New Flesh</li>
+        <li>And All That Could Have Been</li>
+        <li>Deep</li>
+        <li>The Perfect Drug</li>
+        </ul>
+        </li>
+    <li><strong>With Teeth (and related)</strong>
+        <ul>
+        <li>All The Love In The World</li>
+        <li>You Know What You Are?</li>
+        <li>The Collector</li>
+        <li>The Hand That Feeds</li>
+        <li>Love Is Not Enough</li>
+        <li>Every Day Is Exactly The Same</li>
+        <li>With Teeth</li>
+        <li>Only</li>
+        <li>Getting Smaller</li>
+        <li>Sunspots</li>
+        <li>The Line Begins to Blur</li>
+        <li>Beside You In Time</li>
+        <li>Right Where It Belongs</li>
+        <li>Home</li>
+        <li>Non-Entity</li>
+        <li>Not So Pretty Now</li>
+        </ul>
+        </li>
+    <li><strong>Year Zero</strong>
+        <ul>
+        <li>The Beginning of the End</li>
+        <li>Survivalism</li>
+        <li>The Good Soldier</li>
+        <li>Vessel</li>
+        <li>Me, I'm Not</li>
+        <li>Capital G</li>
+        <li>My Violent Heart</li>
+        <li>The Warning</li>
+        <li>God Given</li>
+        <li>Meet Your Master</li>
+        <li>The Greater Good</li>
+        <li>The Great Destroyer</li>
+        <li>In This Twilight</li>
+        <li>Zero Sum</li>
+        </ul>
+        </li>
+    <li><strong>The Slip</strong>
+        <ul>
+        <li>1,000,000</li>
+        <li>Letting You</li>
+        <li>Discipline</li>
+        <li>Echoplex</li>
+        <li>Head Down</li>
+        <li>Lights in the Sky</li>
+        <li>Demon Seed</li>
+        </ul>
+        </li>
+    <li><strong>Hesitation Marks</strong>
+        <ul>
+        <li>Copy of A</li>
+        <li>Came Back Haunted</li>
+        <li>Find My Way</li>
+        <li>All Time Low</li>
+        <li>Disappointed</li>
+        <li>Everything</li>
+        <li>Satellite</li>
+        <li>Various Methods of Escape</li>
+        <li>Running</li>
+        <li>I Would For You</li>
+        <li>In Two</li>
+        <li>While I'm Still Here</li>
+        </ul>
+        </li>
+    <li><strong>Not The Actual Trilogy</strong> <em>(Not The Actual Events, ADD VIOLENCE, ...)</em>
+        <ul>
+        <li>Branches/Bones</li>
+        <li>Dear World,</li>
+        <li>She's Gone Away</li>
+        <li>The Idea of You</li>
+        <li>Burning Bright (Field on Fire)</li>
+        <li>Less Than</li>
+        <li>The Lovers</li>
+        <li>This Isn't the Place</li>
+        <li>Not Anymore</li>
+        <li>The Background World</li>
+        </ul>
+        </li>
+    </ul>
+    <?php
+}
+
 ?><!DOCTYPE HTML>
 <html>
 <head>
@@ -547,6 +783,15 @@ function do_search()
 <script type="text/javascript" src="func.js"></script>
 </head>
 <body onLoad="checkAlbumsRestrict();">
+<?php
+
+if ($action != 'nothing')
+{
+    do_search_box();
+}
+
+?>
+<h1>Nine Inch Nails Lyrics Stats</h1>
 <?php
 if (count($errors) > 0)
 {
@@ -566,15 +811,18 @@ switch ($action)
         break;
 
     case 'phrase':
-        do_search_box();
         do_phrase();
+        break;
+
+    case 'about':
+        do_about();
         break;
 
     case 'search':
     default:
-        do_search_box();
         do_search();
         break;
+
 }
 
 ?>
