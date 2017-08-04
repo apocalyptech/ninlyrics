@@ -3,8 +3,6 @@
 * Prettification
 * DB Error reporting
 * Drop out of "complex" SQL mode if literally every album is selected
-* Make sure that data_do_search() fails gracefully when passed in
-  album IDs which don't exist.
 * Clean up the actual lyric data, of course.
 * Notification of search constraints which don't work well together
   (like specifying two albums and then saying that the phrase must
@@ -23,3 +21,10 @@
   something important to catalog.  It's not entirely important, really,
   as that kind of pruning wouldn't happen for phrases between songs,
   but maybe we should alter things anyway...
+* Make sure that data_do_search() fails gracefully when passed in
+  album IDs which don't exist.  (This actually isn't *really* a
+  problem because the one place where we call data_do_search() already
+  verifies the the album IDs are valid, so the app as a whole handles
+  it just fine.  I think we'd have broken SQL were an invalid album
+  ID make it in to data_do_search() but in the end I'm just going to
+  leave it.)
