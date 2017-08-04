@@ -554,6 +554,48 @@ function do_search()
 function do_about()
 {
     ?>
+
+    <h2>About</h2>
+
+    <p>
+    This page is a database of Nine Inch Nails lyrics, with an eye to digging
+    into lyrics across multiple NIN songs to notice patterns.  There's a number
+    of lyrical themes which pop up from time to time in NIN songs (one pretty
+    obvious one is "nothing can stop me now"), and I thought it would be fun to
+    write something which would make it easier to find patterns which might
+    be more easily overlooked.
+    </p>
+
+    <p>
+    The interface isn't great, but should get the job done.  To search for
+    phrases which contain any specific text, use the <strong>Contains</strong>
+    textbox.  If you want to restrict your results to phrases which have a
+    certain number of words, use the <strong># Words</strong> boxes.  If you
+    only want to get results which appear in more than one album, or more
+    than one song, use <strong># Albums</strong> and/or <strong># Songs</strong>.
+    You can also specify to only search within certain albums (see below for
+    which songs are grouped with which album), use the <strong>Only Albums</strong>
+    listbox.  You should be able to select multiple ones using
+    <tt>Ctrl</tt>/<tt>Shift</tt>/etc, as usual.
+    </p>
+
+    <p>
+    The checkbox labelled <em>"Limit "# Albums" and "# Songs" to selected albums"</em>
+    might be a bit confusing.  In general, you'll want to leave the checkbox active,
+    which is the default.  When the checkbox is active, the values you put in for the
+    <strong># Albums</strong> and <strong># Songs</strong> boxes will <em>only</em>
+    apply to the albums you've selected.  For instance, over the whole discography
+    there are five tracks which contain the word "cracks," four of which are in
+    With Teeth.  If you select "With Teeth (and related)", specify "at least 5" for
+    <strong># Songs</strong>, and leave the checkbox active,
+    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=1&albums_restrict=on">no results will be found</a>.
+    If you disable the checkbox, though,
+    <a href="index.php?text=cracks&min_words=&max_words=&min_albums=&max_albums=&min_songs=5&max_songs=&albums[]=1">you'll see the results</a>.
+    Alternatively, if you search for "nothing can stop me now" with "The Slip"
+    selected, you'll <a href="index.php?text=nothing+can+stop+me+now&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums[]=8">never get any results regardless of the checkbox</a>, since that
+    phrase doesn't appear anywhere in The Slip.
+    </p>
+    
     <h2>Interesting Results</h2>
 
     <p>
@@ -602,7 +644,7 @@ function do_about()
     <p>
     This database is primarily concerned with the "main" NIN releases, though I've
     included various B-sides and extra content where it seemed appropriate.  I've
-    purposefully excluded any covers from here, so song like <em>Get Down Make Love</em>,
+    purposefully excluded any covers from here, so songs like <em>Get Down Make Love</em>,
     <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a corner
     case I remain a little undecided on, since that was originally Pigface but TR
     obviously had some input into it.  So far I've left that one out.  I've also
