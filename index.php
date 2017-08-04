@@ -200,6 +200,10 @@ function do_phrase()
             {
                 print ' class="evenrow"';
             }
+            else
+            {
+                print ' class="oddrow"';
+            }
             print ">\n";
             print '<td><a href="#" onClick="toggleLyrics(\'' . $data['sid'] . '\'); return false;">' . htmlentities($data['stitle']) . "</a></td>\n";
             print '<td><nobr><a href="index.php?albums[]=' . $data['aid'] . '">' . htmlentities($data['atitle']) . "</a></nobr></td>\n";
@@ -520,6 +524,10 @@ function do_search()
             if ($i % 2 == 0)
             {
                 print ' class="evenrow"';
+            }
+            else
+            {
+                print ' class="oddrow"';
             }
             print ">\n";
             print '<td><a href="index.php?' . modify_querystring('phrase', $data['phrase']) . "\">" . htmlentities($data['phrase']) . "</a></td>\n";

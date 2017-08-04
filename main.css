@@ -47,8 +47,12 @@ BODY {
     margin-bottom: .5em;
 }
 
-.evenrow {
+.oddrow {
     background-color: #ddd;
+}
+
+.evenrow {
+    background-color: #fff;
 }
 
 .hiphrase {
