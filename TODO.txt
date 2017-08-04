@@ -1,5 +1,8 @@
-* Javascript highlighting of lyrics
+Would like to have:
+
+* Javascript highlighting of lyrics?  Not sure about this, actually.
 * Error reporting on invalid search variables (text, most notably)
+  - I'm actually probably gonna leave that the way it is.
 * Prettification
 * DB Error reporting
 * Drop out of "complex" SQL mode if literally every album is selected
@@ -8,6 +11,8 @@
   (like specifying two albums and then saying that the phrase must
   be in a minimum of three, etc)
 * Probably should reset paging when sorts change?
+
+Things which probably won't happen:
 
 * We might be over-pruning our phrase list.  For example, a search
   for "button" will yield three phrases, all from Capital G:
