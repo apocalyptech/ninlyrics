@@ -276,7 +276,7 @@ function do_search_box()
     </tr>
     </table>
     </form>
-    <p><a href="index.php">Docs / Information</a></p>
+    <div class="aboutlink"><a href="index.php">Docs / Information / About</a></div>
     </div>
     <?php
 }

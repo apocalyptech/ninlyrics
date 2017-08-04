@@ -47,6 +47,12 @@ BODY {
     margin-bottom: .5em;
 }
 
+.aboutlink {
+    text-align: center;
+    margin-top: 1em;
+    font-weight: bold;
+}
+
 .oddrow {
     background-color: #ddd;
 }
