@@ -69,32 +69,32 @@ function data_get_albums()
  * The constraints are specified by an associative array.  The valid
  * keys for this array are:
  *
- *  - min_words: Key should be an integer specifying the minimum number of
+ *  - min_words: Value should be an integer specifying the minimum number of
  *               words in the phrase
  *
- *  - max_words: Key should be an integer specifying the maximum number of
+ *  - max_words: Value should be an integer specifying the maximum number of
  *               words in the phrase
  *
- *  - min_songs: Key should be an integer specifying the minimum number of
+ *  - min_songs: Value should be an integer specifying the minimum number of
  *               songs in which the phrase appears
  *
- *  - max_songs: Key should be an integer specifying the maximum number of
+ *  - max_songs: Value should be an integer specifying the maximum number of
  *               songs in which the phrase appears
  *
- *  - min_albums: Key should be an integer specifying the minimum number of
+ *  - min_albums: Value should be an integer specifying the minimum number of
  *                albums in which the phrase appears
  *
- *  - max_albums: Key should be an integer specifying the maximum number of
+ *  - max_albums: Value should be an integer specifying the maximum number of
  *                albums in which the phrase appears
  *
- *  - text: Key should be a string which should be contained inside the phrase.
+ *  - text: Value should be a string which should be contained inside the phrase.
  *          The text has a minimum length of three, and will be ignored if it
  *          is shorter than that.
  *
- *  - albums: Key should be an array containing the numeric IDs of albums in
+ *  - albums: Value should be an array containing the numeric IDs of albums in
  *            which the phrase will be contained.
  *
- *  - albums_restrict: Key should be a boolean which specifies whether the
+ *  - albums_restrict: Value should be a boolean which specifies whether the
  *                *_songs and *_albums parameters should be restricted to the
  *                specified albums, or whether they should apply to the global
  *                stats.  Defaults to "true."
