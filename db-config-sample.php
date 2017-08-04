@@ -5,4 +5,3 @@ $dbname = 'ninlyrics';
 $dbuser = 'ninlyrics_ro';
 $dbpass = 'password';
 
-?>

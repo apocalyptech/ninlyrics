@@ -178,6 +178,7 @@ function do_phrase()
     // our \b matching for highlighting.
     $regex_phrase = preg_replace('/^\W*(.*?)\W*$/', '\1', $phrase);
 
+    print "<div class=\"content\">\n";
     $songlist = data_get_songlist($phrase);
     if (count($songlist) > 0)
     {
@@ -214,6 +215,7 @@ function do_phrase()
     {
         print '<p>No songs found with phrase "' . htmlentities($phrase) . "\"</p>\n";
     }
+    print "</div>\n";
 }
 
 function do_search_box()
@@ -383,6 +385,7 @@ function do_search()
     }
 
     // Display our search terms
+    print "<div class=\"content\">\n";
     if (count($constraints_eng) > 0)
     {
         ?>
@@ -533,6 +536,7 @@ function do_search()
     {
         print "<p>No phrases found.</p>\n";
     }
+    print "</div>\n";
 }
 
 ?><!DOCTYPE HTML>

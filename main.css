@@ -13,6 +13,10 @@ BODY {
     color: red;
 }
 
+.songs {
+    width: 50em;
+}
+
 .searchterms {
     border: 1px solid silver;
     float: right;
