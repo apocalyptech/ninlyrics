@@ -292,8 +292,12 @@ function do_search()
         {
             if (trim($_REQUEST[$searchint]) != '')
             {
-                $constraints[$searchint] = (int)$_REQUEST[$searchint];
-                array_push($constraints_eng, $eng . ': ' . (int)$_REQUEST[$searchint]);
+                $intval = (int)$_REQUEST[$searchint];
+                if ($intval > 0)
+                {
+                    $constraints[$searchint] = (int)$_REQUEST[$searchint];
+                    array_push($constraints_eng, $eng . ': ' . (int)$_REQUEST[$searchint]);
+                }
             }
         }
     }
