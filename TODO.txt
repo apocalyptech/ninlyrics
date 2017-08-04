@@ -5,7 +5,6 @@ Would like to have:
   - I'm actually probably gonna leave that the way it is.
 * Prettification
 * DB Error reporting
-* Clean up the actual lyric data, of course.
 * Notification of search constraints which don't work well together
   (like specifying two albums and then saying that the phrase must
   be in a minimum of three, etc)
