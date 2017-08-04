@@ -604,7 +604,7 @@ function do_about()
 
     <p>
     Even if you're not GitHub savvy, feel free to let me know if anything seems amiss,
-    or if you think something should be done differently on this.  I'm "xolotl" on ETS,
+    or if you think something should be done differently on this.  I'm "xolotl" on <a href="http://echoingthesound.org/community/">ETS</a>,
     or feel free to email me at <tt>cj@apocalyptech.com</tt>.
     </p>
 
