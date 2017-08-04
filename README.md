@@ -10,3 +10,5 @@ from a collection of text files) is in Python.
 It's written with a MySQL backend, but it would be pretty trivial to
 use a different DB backend.  The PHP component already uses PDO, and the
 import script just, well, runs some INSERTs, as you'd expect.
+
+![Screenshot](screenshot.png)
