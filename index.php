@@ -566,7 +566,7 @@ function do_about()
     </li>
     <li>The ubiquitous "<a href="index.php?text=&min_words=5&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=nothing+can+stop+me+now">nothing can stop me now</a>"
     can be found in five songs across three albums.</li>
-    <li>When we drop down to three-word phrases,
+    <li>When we drop down to <a href="index.php?text=&min_words=3&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on">three-word phrases</a>,
     "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=i+don%27t+know">I don't know</a>"
     tops the bunch, appearing in ten songs across six albums.
     "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=used+to+be">used to be</a>"
