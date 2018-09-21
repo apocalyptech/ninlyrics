@@ -616,7 +616,7 @@ function do_about()
     <h2>Interesting Results</h2>
 
     <p>
-    These were noted in August 2017, after the release of ADD VIOLENCE.
+    These were last updated in September 2018, after finally adding Bad Witch lyrics.
     Future releases (or updates to our lyric database) may, of course, change
     this around somewhat.  I'll endeavor to keep this up to date as the DB
     changes, though.
@@ -639,8 +639,8 @@ function do_about()
     "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=used+to+be">used to be</a>"
     gets pretty close: ten songs, but only across five albums.</li>
     <li>For all of TR's lyrical self-absorbtion,
-    "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 96 songs,
-    compared to 98 for "<a href="index.php?min_songs=2&albums_restrict=1&phrase=you">you</a>".
+    "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 99 songs,
+    compared to 102 for "<a href="index.php?min_songs=2&albums_restrict=1&phrase=you">you</a>".
     </li>
     <li>Profanity Index!
         <ul>
@@ -830,7 +830,7 @@ function do_about()
         <li>While I'm Still Here</li>
         </ul>
         </li>
-    <li><strong>Not The Actual Trilogy</strong> <em>(Not The Actual Events, ADD VIOLENCE, ...)</em>
+    <li><strong>Not The Actual Trilogy</strong> <em>(Not The Actual Events, ADD VIOLENCE, Bad Witch)</em>
         <ul>
         <li>Branches/Bones</li>
         <li>Dear World,</li>
@@ -842,6 +842,11 @@ function do_about()
         <li>This Isn't the Place</li>
         <li>Not Anymore</li>
         <li>The Background World</li>
+        <li>Shit Mirror</li>
+        <li>Ahead of Ourselves</li>
+        <li>God Break Down the Door</li>
+        <li>I'm Not From This World</li>
+        <li>Over and Out</li>
         </ul>
         </li>
     </ul>
