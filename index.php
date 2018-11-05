@@ -188,7 +188,18 @@ function do_phrase()
     $songlist = data_get_songlist($phrase);
     if (count($songlist) > 0)
     {
-        print '<p><strong>Phrase:</strong> <em>"' . htmlentities($phrase) . "\"</em></p>\n";
+        if (count($songlist) == 1)
+        {
+            $plural = '';
+        }
+        else
+        {
+            $plural = 's';
+        }
+        print "<p>\n";
+        print '<strong>Phrase:</strong> <em>"' . htmlentities($phrase) . "\"</em><br/>\n";
+        print '<em>(' . count($songlist) . ' song' . $plural . " found)</em>\n";
+        print "</p>\n";
         print "<table class=\"songs\">\n";
         print "<tr>\n";
         print "<th>Song</th>\n";
@@ -639,15 +650,15 @@ function do_about()
     "<a href="index.php?text=&min_words=3&max_words=&min_albums=2&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=used+to+be">used to be</a>"
     gets pretty close: ten songs, but only across five albums.</li>
     <li>For all of TR's lyrical self-absorbtion,
-    "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 99 songs,
+    "<a href="index.php?min_songs=2&albums_restrict=1&phrase=i">I</a>" only appears in 101 songs,
     compared to 102 for "<a href="index.php?min_songs=2&albums_restrict=1&phrase=you">you</a>".
     </li>
     <li>Profanity Index!
         <ul>
         <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fucking">fucking</a> - 14 songs, 8 albums</li>
-        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fuck">fuck</a> - 12 songs, 6 albums</li>
+        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fuck">fuck</a> - 13 songs, 6 albums</li>
         <li><a href="index.php?text=shit&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=shit">shit</a> - 8 songs, 4 albums</li>
-        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fucked">fucked</a> - 3 songs, 3 albums</li>
+        <li><a href="index.php?text=fuck&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=fucked">fucked</a> - 4 songs, 4 albums</li>
         <li><a href="index.php?text=piss&min_words=&max_words=&min_albums=&max_albums=&min_songs=2&max_songs=&albums_restrict=on&phrase=piss">piss</a> - 2 songs, 2 albums</li>
         <li><a href="index.php?text=starfuckers&min_words=&max_words=&min_albums=&max_albums=&min_songs=&max_songs=&albums_restrict=on&phrase=starfuckers">starfuckers</a> - surprisingly, only a single song!</li>
         </ul>
@@ -660,16 +671,18 @@ function do_about()
 
     <p>
     This database is primarily concerned with the "main" NIN releases, though I've
-    included various B-sides and extra content where it seemed appropriate.  I've
-    purposefully excluded any covers, so songs like <em>Get Down Make Love</em>,
-    <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a corner
-    case I remain a little undecided on, since that was originally Pigface but TR
-    obviously had some input into it.  So far I've left that one out.  I've also
-    intentionally excluded the handful of early demo songs which never made it to
-    PHM, like <em>Purest Feeling</em>, since TR's effectively disavowed those.  I've
-    also excluded the various "reworked" remixes such as <em>Closer To God</em>
-    which technically add extra lyrics but are largely the same as their source
-    material.  Also missing is HTDA, again on purpose.
+    included various B-sides and extra content where it seemed appropriate.
+    <em>>Now I'm Nothing</em> is a bit of a corner case, but I've included it with
+    PHM on account of its inclusion on recent NIN tours.  I've purposefully 
+    excluded any covers, so songs like <em>Get Down Make Love</em>, 
+    <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a 
+    corner case I remain a little undecided on, since that was originally Pigface 
+    but TR obviously had some input into it.  So far I've left that one out.  I've 
+    also intentionally excluded the handful of early demo songs which never made it 
+    to PHM, like <em>Purest Feeling</em>, since TR's effectively disavowed those.  
+    I've also excluded the various "reworked" remixes such as <em>Closer To God</em>
+    which technically add extra lyrics but are largely the same as their 
+    source material.  Also missing is HTDA, again on purpose.
     </p>
 
     <p>
@@ -713,6 +726,7 @@ function do_about()
         <li>That's What I Get</li>
         <li>The Only Time</li>
         <li>Ringfinger</li>
+        <li>Now I'm Nothing</li>
         </ul>
         </li>
     <li><strong>Broken</strong>
@@ -754,6 +768,7 @@ function do_about()
         <li>Into the Void</li>
         <li>Where is Everybody?</li>
         <li>Please</li>
+        <li>+Appendage</li>
         <li>Starfuckers, Inc.</li>
         <li>I'm Looking Forward to Joining You, Finally</li>
         <li>The Big Come Down</li>
@@ -805,6 +820,7 @@ function do_about()
         </li>
     <li><strong>The Slip</strong>
         <ul>
+        <li>999,999</li>
         <li>1,000,000</li>
         <li>Letting You</li>
         <li>Discipline</li>
