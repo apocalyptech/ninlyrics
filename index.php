@@ -672,7 +672,7 @@ function do_about()
     <p>
     This database is primarily concerned with the "main" NIN releases, though I've
     included various B-sides and extra content where it seemed appropriate.
-    <em>>Now I'm Nothing</em> is a bit of a corner case, but I've included it with
+    <em>Now I'm Nothing</em> is a bit of a corner case, but I've included it with
     PHM on account of its inclusion on recent NIN tours.  I've purposefully 
     excluded any covers, so songs like <em>Get Down Make Love</em>, 
     <em>Memorabilia</em>, and <em>Metal</em> aren't present.  <em>Suck</em> is a 
